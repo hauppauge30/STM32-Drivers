@@ -186,12 +186,13 @@
 #define RESERVED_AHB_OFFSET  (0x40030000UL)
 #define RESERVED_AHB_END     (0x4FFFFFFFUL)
 
-
-
-
-void RCC_enable_function()
+enum Bus
 {
-RCC_BASE
+    eAhbBus,
+    eApb1Bus,
+    eApb2Bus
+};
 
 
-}
+
+
