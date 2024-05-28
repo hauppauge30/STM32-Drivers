@@ -1,0 +1,2 @@
+../Inc/gpio/gpio_drv.c:10:6:vDoConfigurePin	9
+../Inc/gpio/gpio_drv.c:60:6:vDoSetPin	9
