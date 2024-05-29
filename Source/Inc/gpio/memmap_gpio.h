@@ -218,6 +218,8 @@ typedef union
 	uint32 u32GPIOx_IDR_Reg;
 }GPIOx_IDR_reg;
 
+
+
 typedef union
 {
 	bool  ODR0:1;
@@ -274,7 +276,7 @@ typedef union
 	bool BR13:1;
 	bool BR14:1;
 	bool BR15:1;
-	uint32 u32GPIOx_BSRR_Reg;
+	volatile uint32 u32GPIOx_BSRR_Reg;
 }GPIOx_BSRR_reg;
 
 
@@ -373,25 +375,25 @@ typedef union
 typedef struct
 {
 	/* 0x40020000 */
-	GPIOx_MODER_reg   GPIOx_MODER;   /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x00*/
+	volatile GPIOx_MODER_reg   GPIOx_MODER;   /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x00*/
 	/* 0x40020004 */
-	GPIOx_OTYPER_reg  GPIOx_OTYPER;  /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x04*/
+	volatile GPIOx_OTYPER_reg  GPIOx_OTYPER;  /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x04*/
 	/* 0x40020008 */
-	GPIOx_OSPEEDR_reg GPIOx_OSPEEDR; /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x08*/
+	volatile GPIOx_OSPEEDR_reg GPIOx_OSPEEDR; /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x08*/
 	/* 0x4002000C */
-	GPIOx_PUPDR_reg   GPIOx_PUPDR;   /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x0C*/
+	volatile GPIOx_PUPDR_reg   GPIOx_PUPDR;   /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x0C*/
 	/* 0x40020010 */
-	GPIOx_IDR_reg	  GPIOx_IDR;     /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x10*/
+	volatile GPIOx_IDR_reg	  GPIOx_IDR;     /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x10*/
 	/* 0x40020014 */
-	GPIOx_ODR_reg	  GPIOx_ODR;     /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x14*/
+	volatile GPIOx_ODR_reg	  GPIOx_ODR;     /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x14*/
 	/* 0x40020018 */
-	GPIOx_BSRR_reg	  GPIOx_BSRR;    /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x18*/
+	volatile GPIOx_BSRR_reg	  GPIOx_BSRR;    /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x18*/
 	/* 0x4002001C */
-	GPIOx_LCKR_reg    GPIOx_LCKR;    /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x1C*/
+	volatile GPIOx_LCKR_reg    GPIOx_LCKR;    /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x1C*/
 	/* 0x40020020 */
-	GPIOx_AFRL_reg    GPIOx_AFRL;	 /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x20*/
+	volatile GPIOx_AFRL_reg    GPIOx_AFRL;	 /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x20*/
 	/* 0x40020024 */
-	GPIOx_AFRH_reg    GPIOx_AFRH;    /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x24*/
+	volatile GPIOx_AFRH_reg    GPIOx_AFRH;    /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x24*/
 }Registers_GPIO;
 
 
