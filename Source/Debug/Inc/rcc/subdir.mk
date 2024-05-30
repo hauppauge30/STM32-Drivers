@@ -5,26 +5,23 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Inc/gpio/gpio_drv.c \
-../Inc/gpio/peripheral_pins.c 
+../Inc/rcc/rcc.c 
 
 OBJS += \
-./Inc/gpio/gpio_drv.o \
-./Inc/gpio/peripheral_pins.o 
+./Inc/rcc/rcc.o 
 
 C_DEPS += \
-./Inc/gpio/gpio_drv.d \
-./Inc/gpio/peripheral_pins.d 
+./Inc/rcc/rcc.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-Inc/gpio/%.o Inc/gpio/%.su Inc/gpio/%.cyclo: ../Inc/gpio/%.c Inc/gpio/subdir.mk
+Inc/rcc/%.o Inc/rcc/%.su Inc/rcc/%.cyclo: ../Inc/rcc/%.c Inc/rcc/subdir.mk
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 
-clean: clean-Inc-2f-gpio
+clean: clean-Inc-2f-rcc
 
-clean-Inc-2f-gpio:
-	-$(RM) ./Inc/gpio/gpio_drv.cyclo ./Inc/gpio/gpio_drv.d ./Inc/gpio/gpio_drv.o ./Inc/gpio/gpio_drv.su ./Inc/gpio/peripheral_pins.cyclo ./Inc/gpio/peripheral_pins.d ./Inc/gpio/peripheral_pins.o ./Inc/gpio/peripheral_pins.su
+clean-Inc-2f-rcc:
+	-$(RM) ./Inc/rcc/rcc.cyclo ./Inc/rcc/rcc.d ./Inc/rcc/rcc.o ./Inc/rcc/rcc.su
 
-.PHONY: clean-Inc-2f-gpio
+.PHONY: clean-Inc-2f-rcc
 

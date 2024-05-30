@@ -1,4 +1,6 @@
 "./Inc/gpio/gpio_drv.o"
+"./Inc/gpio/peripheral_pins.o"
+"./Inc/rcc/rcc.o"
 "./Src/main.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"

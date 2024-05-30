@@ -49,22 +49,24 @@
 
 typedef union
 {
-	uint8 MODER0:2;
-	uint8 MODER1:2;
-	uint8 MODER2:2;
-	uint8 MODER3:2;
-	uint8 MODER4:2;
-	uint8 MODER5:2;
-	uint8 MODER6:2;
-	uint8 MODER7:2;
-	uint8 MODER8:2;
-	uint8 MODER9:2;
-	uint8 MODER10:2;
-	uint8 MODER11:2;
-	uint8 MODER12:2;
-	uint8 MODER13:2;
-	uint8 MODER14:2;
-	uint8 MODER15:2;
+	struct {
+		uint8 MODER0:2;
+		uint8 MODER1:2;
+		uint8 MODER2:2;
+		uint8 MODER3:2;
+		uint8 MODER4:2;
+		uint8 MODER5:2;
+		uint8 MODER6:2;
+		uint8 MODER7:2;
+		uint8 MODER8:2;
+		uint8 MODER9:2;
+		uint8 MODER10:2;
+		uint8 MODER11:2;
+		uint8 MODER12:2;
+		uint8 MODER13:2;
+		uint8 MODER14:2;
+		uint8 MODER15:2;
+	}GPIOx_MODER_Bit_Set;
 	uint32 GPIOx_MODER_Reg;
 }GPIOx_MODER_reg;
 
@@ -86,23 +88,25 @@ typedef enum
 
 typedef union
 {
-	bool OT0:1;
-	bool OT1:1;
-	bool OT2:1;
-	bool OT3:1;
-	bool OT4:1;
-	bool OT5:1;
-	bool OT6:1;
-	bool OT7:1;
-	bool OT8:1;
-	bool OT9:1;
-	bool OT10:1;
-	bool OT11:1;
-	bool OT12:1;
-	bool OT13:1;
-	bool OT14:1;
-	bool OT15:1;
-	const uint16 reserved;
+	struct {
+			bool OT0:1;
+			bool OT1:1;
+			bool OT2:1;
+			bool OT3:1;
+			bool OT4:1;
+			bool OT5:1;
+			bool OT6:1;
+			bool OT7:1;
+			bool OT8:1;
+			bool OT9:1;
+			bool OT10:1;
+			bool OT11:1;
+			bool OT12:1;
+			bool OT13:1;
+			bool OT14:1;
+			bool OT15:1;
+			const uint16 reserved;
+	}GPIOx_OTYPER_Bit_Set;
 	uint32 GPIOx_OTYPER_Reg;
 }GPIOx_OTYPER_reg;
 
@@ -121,22 +125,24 @@ typedef enum
 
 typedef union
 {
-	uint8 OSPEEDR0:2;
-	uint8 OSPEEDR1:2;
-	uint8 OSPEEDR2:2;
-	uint8 OSPEEDR3:2;
-	uint8 OSPEEDR4:2;
-	uint8 OSPEEDR5:2;
-	uint8 OSPEEDR6:2;
-	uint8 OSPEEDR7:2;
-	uint8 OSPEEDR8:2;
-	uint8 OSPEEDR9:2;
-	uint8 OSPEEDR10:2;
-	uint8 OSPEEDR11:2;
-	uint8 OSPEEDR12:2;
-	uint8 OSPEEDR13:2;
-	uint8 OSPEEDR14:2;
-	uint8 OSPEEDR15:2;
+	struct {
+		uint8 OSPEEDR0:2;
+		uint8 OSPEEDR1:2;
+		uint8 OSPEEDR2:2;
+		uint8 OSPEEDR3:2;
+		uint8 OSPEEDR4:2;
+		uint8 OSPEEDR5:2;
+		uint8 OSPEEDR6:2;
+		uint8 OSPEEDR7:2;
+		uint8 OSPEEDR8:2;
+		uint8 OSPEEDR9:2;
+		uint8 OSPEEDR10:2;
+		uint8 OSPEEDR11:2;
+		uint8 OSPEEDR12:2;
+		uint8 OSPEEDR13:2;
+		uint8 OSPEEDR14:2;
+		uint8 OSPEEDR15:2;
+	}GPIOx_OSPEEDR_Bit_Set;
 	uint32 GPIOx_OSPEEDR_Reg;
 }GPIOx_OSPEEDR_reg;
 
@@ -160,22 +166,24 @@ typedef enum
 
 typedef struct
 {
-	uint8  PUPDR0:2;
-	uint8  PUPDR1:2;
-	uint8  PUPDR2:2;
-	uint8  PUPDR3:2;
-	uint8  PUPDR4:2;
-	uint8  PUPDR5:2;
-	uint8  PUPDR6:2;
-	uint8  PUPDR7:2;
-	uint8  PUPDR8:2;
-	uint8  PUPDR9:2;
-	uint8  PUPDR10:2;
-	uint8  PUPDR11:2;
-	uint8  PUPDR12:2;
-	uint8  PUPDR13:2;
-	uint8  PUPDR14:2;
-	uint8  PUPDR15:2;
+	struct {
+		uint8  PUPDR0:2;
+		uint8  PUPDR1:2;
+		uint8  PUPDR2:2;
+		uint8  PUPDR3:2;
+		uint8  PUPDR4:2;
+		uint8  PUPDR5:2;
+		uint8  PUPDR6:2;
+		uint8  PUPDR7:2;
+		uint8  PUPDR8:2;
+		uint8  PUPDR9:2;
+		uint8  PUPDR10:2;
+		uint8  PUPDR11:2;
+		uint8  PUPDR12:2;
+		uint8  PUPDR13:2;
+		uint8  PUPDR14:2;
+		uint8  PUPDR15:2;
+	}GPIOx_PUPDR_Bit_Set;
 	uint32 GPIOx_PUPDR_Reg;
 }GPIOx_PUPDR_reg;
 
@@ -198,23 +206,25 @@ typedef enum
 
 typedef union
 {
-	bool IDR0:1;
-	bool IDR1:1;
-	bool IDR2:1;
-	bool IDR3:1;
-	bool IDR4:1;
-	bool IDR5:1;
-	bool IDR6:1;
-	bool IDR7:1;
-	bool IDR8:1;
-	bool IDR9:1;
-	bool IDR10:1;
-	bool IDR11:1;
-	bool IDR12:1;
-	bool IDR13:1;
-	bool IDR14:1;
-	bool IDR15:1;
-	uint16 reserved;
+	struct{
+		bool IDR0:1;
+		bool IDR1:1;
+		bool IDR2:1;
+		bool IDR3:1;
+		bool IDR4:1;
+		bool IDR5:1;
+		bool IDR6:1;
+		bool IDR7:1;
+		bool IDR8:1;
+		bool IDR9:1;
+		bool IDR10:1;
+		bool IDR11:1;
+		bool IDR12:1;
+		bool IDR13:1;
+		bool IDR14:1;
+		bool IDR15:1;
+		uint16 reserved;
+	}GPIOx_IDR_Bit_Set;
 	uint32 u32GPIOx_IDR_Reg;
 }GPIOx_IDR_reg;
 
@@ -222,84 +232,91 @@ typedef union
 
 typedef union
 {
-	bool  ODR0:1;
-	bool  ODR1:1;
-	bool  ODR2:1;
-	bool  ODR3:1;
-	bool  ODR4:1;
-	bool  ODR5:1;
-	bool  ODR6:1;
-	bool  ODR7:1;
-	bool  ODR8:1;
-	bool  ODR9:1;
-	bool  ODR10:1;
-	bool  ODR11:1;
-	bool  ODR12:1;
-	bool  ODR13:1;
-	bool  ODR14:1;
-	bool  ODR15:1;
-	uint16 reserved;
+	struct{
+		bool  ODR0:1;
+		bool  ODR1:1;
+		bool  ODR2:1;
+		bool  ODR3:1;
+		bool  ODR4:1;
+		bool  ODR5:1;
+		bool  ODR6:1;
+		bool  ODR7:1;
+		bool  ODR8:1;
+		bool  ODR9:1;
+		bool  ODR10:1;
+		bool  ODR11:1;
+		bool  ODR12:1;
+		bool  ODR13:1;
+		bool  ODR14:1;
+		bool  ODR15:1;
+		uint16 reserved;
+	}GPIOx_ODR_Bit_Set;
 	uint32 u32GPIOx_ODR_Reg;
 }GPIOx_ODR_reg;
 
 typedef union
 {
-	bool BS0:1;
-	bool BS1:1;
-	bool BS2:1;
-	bool BS3:1;
-	bool BS4:1;
-	bool BS5:1;
-	bool BS6:1;
-	bool BS7:1;
-	bool BS8:1;
-	bool BS9:1;
-	bool BS10:1;
-	bool BS11:1;
-	bool BS12:1;
-	bool BS13:1;
-	bool BS14:1;
-	bool BS15:1;
-	bool BR0:1;
-	bool BR1:1;
-	bool BR2:1;
-	bool BR3:1;
-	bool BR4:1;
-	bool BR5:1;
-	bool BR6:1;
-	bool BR7:1;
-	bool BR8:1;
-	bool BR9:1;
-	bool BR10:1;
-	bool BR11:1;
-	bool BR12:1;
-	bool BR13:1;
-	bool BR14:1;
-	bool BR15:1;
+	struct{
+		bool BS0:1;
+		bool BS1:1;
+		bool BS2:1;
+		bool BS3:1;
+		bool BS4:1;
+		bool BS5:1;
+		bool BS6:1;
+		bool BS7:1;
+		bool BS8:1;
+		bool BS9:1;
+		bool BS10:1;
+		bool BS11:1;
+		bool BS12:1;
+		bool BS13:1;
+		bool BS14:1;
+		bool BS15:1;
+		bool BR0:1;
+		bool BR1:1;
+		bool BR2:1;
+		bool BR3:1;
+		bool BR4:1;
+		bool BR5:1;
+		bool BR6:1;
+		bool BR7:1;
+		bool BR8:1;
+		bool BR9:1;
+		bool BR10:1;
+		bool BR11:1;
+		bool BR12:1;
+		bool BR13:1;
+		bool BR14:1;
+		bool BR15:1;
+	}GPIOx_BSRR_Bit_Set;
 	volatile uint32 u32GPIOx_BSRR_Reg;
 }GPIOx_BSRR_reg;
 
 
 typedef union
 {
-	bool LCK_K0: 1;
-	bool LCK_K1: 1;
-	bool LCK_K2: 1;
-	bool LCK_K3: 1;
-	bool LCK_K4: 1;
-	bool LCK_K5: 1;
-	bool LCK_K6: 1;
-	bool LCK_K7: 1;
-	bool LCK_K8: 1;
-	bool LCK_K9: 1;
-	bool LCK_K10: 1;
-	bool LCK_K11: 1;
-	bool LCK_K12: 1;
-	bool LCK_K13: 1;
-	bool LCK_K14: 1;
-	bool LCK_K15: 1;
-	bool LCK_K16: 1;
-	uint16 reserved:15;
+	struct{
+		bool LCK_K0: 1;
+		bool LCK_K1: 1;
+		bool LCK_K2: 1;
+		bool LCK_K3: 1;
+		bool LCK_K4: 1;
+		bool LCK_K5: 1;
+		bool LCK_K6: 1;
+		bool LCK_K7: 1;
+		bool LCK_K8: 1;
+		bool LCK_K9: 1;
+		bool LCK_K10: 1;
+		bool LCK_K11: 1;
+		bool LCK_K12: 1;
+		bool LCK_K13: 1;
+		bool LCK_K14: 1;
+		bool LCK_K15: 1;
+		bool LCK_K16: 1;
+		uint16 reserved:15;
+	}GPIOx_LCKR_Bit_Set;
+
 	uint32 u32GPIOx_LCKR_Reg;
 }GPIOx_LCKR_reg;
 
@@ -307,67 +324,72 @@ typedef union
 /* TODO: This need to be redesigned in the future */
 typedef union
 {
-	struct {
-		bool AFRL0_bit0:1;
-		bool AFRL0_bit1:1;
-		bool AFRL0_bit2:1;
-		bool AFRL0_bit3:1;
-	}AFRL0;
-	struct {
-		bool AFRL1_bit0:1;
-		bool AFRL1_bit1:1;
-		bool AFRL1_bit2:1;
-		bool AFRL1_bit3:1;
-	}AFRL1;
-	struct {
-		bool AFRL2_bit0:1;
-		bool AFRL2_bit1:1;
-		bool AFRL2_bit2:1;
-		bool AFRL2_bit3:1;
-	}AFRL2;
-	struct {
-		bool AFRL3_bit0:1;
-		bool AFRL3_bit1:1;
-		bool AFRL3_bit2:1;
-		bool AFRL3_bit3:1;
-	}AFRL3;
-	struct {
-		bool AFRL4_bit0:1;
-		bool AFRL4_bit1:1;
-		bool AFRL4_bit2:1;
-		bool AFRL4_bit3:1;
-	}AFRL4;
-	struct {
-		bool AFRL5_bit0:1;
-		bool AFRL5_bit1:1;
-		bool AFRL5_bit2:1;
-		bool AFRL5_bit3:1;
-	}AFRL5;
-	struct {
-		bool AFRL6_bit0:1;
-		bool AFRL6_bit1:1;
-		bool AFRL6_bit2:1;
-		bool AFRL6_bit3:1;
-	}AFRL6;
-	struct {
-		bool AFRL7_bit0:1;
-		bool AFRL7_bit1:1;
-		bool AFRL7_bit2:1;
-		bool AFRL7_bit3:1;
-	}AFRL7;
+	struct{
+		struct {
+			bool AFRL0_bit0:1;
+			bool AFRL0_bit1:1;
+			bool AFRL0_bit2:1;
+			bool AFRL0_bit3:1;
+		}AFRL0;
+		struct {
+			bool AFRL1_bit0:1;
+			bool AFRL1_bit1:1;
+			bool AFRL1_bit2:1;
+			bool AFRL1_bit3:1;
+		}AFRL1;
+		struct {
+			bool AFRL2_bit0:1;
+			bool AFRL2_bit1:1;
+			bool AFRL2_bit2:1;
+			bool AFRL2_bit3:1;
+		}AFRL2;
+		struct {
+			bool AFRL3_bit0:1;
+			bool AFRL3_bit1:1;
+			bool AFRL3_bit2:1;
+			bool AFRL3_bit3:1;
+		}AFRL3;
+		struct {
+			bool AFRL4_bit0:1;
+			bool AFRL4_bit1:1;
+			bool AFRL4_bit2:1;
+			bool AFRL4_bit3:1;
+		}AFRL4;
+		struct {
+			bool AFRL5_bit0:1;
+			bool AFRL5_bit1:1;
+			bool AFRL5_bit2:1;
+			bool AFRL5_bit3:1;
+		}AFRL5;
+		struct {
+			bool AFRL6_bit0:1;
+			bool AFRL6_bit1:1;
+			bool AFRL6_bit2:1;
+			bool AFRL6_bit3:1;
+		}AFRL6;
+		struct {
+			bool AFRL7_bit0:1;
+			bool AFRL7_bit1:1;
+			bool AFRL7_bit2:1;
+			bool AFRL7_bit3:1;
+		}AFRL7;
+	}GPIOx_AFRL_Bit_Set;
+
 	uint32 u32GPIOx_AFRL_Reg;
 }GPIOx_AFRL_reg;
 
 typedef union
 {
-	uint8 AFRH8:4;
-	uint8 AFRH9:4;
-	uint8 AFRH10:4;
-	uint8 AFRH11:4;
-	uint8 AFRH12:4;
-	uint8 AFRH13:4;
-	uint8 AFRH14:4;
-	uint8 AFRH15:4;
+	struct {
+		uint8 AFRH8:4;
+		uint8 AFRH9:4;
+		uint8 AFRH10:4;
+		uint8 AFRH11:4;
+		uint8 AFRH12:4;
+		uint8 AFRH13:4;
+		uint8 AFRH14:4;
+		uint8 AFRH15:4;
+	}GPIOx_AFRH_Bit_Set;
 	uint32 u32GPIOx_AFRH_Reg;
 }GPIOx_AFRH_reg;
 

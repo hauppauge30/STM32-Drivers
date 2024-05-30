@@ -5,47 +5,47 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .isr_vector   000001c4  08000000  08000000  00001000  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  1 .text         00000104  080001c4  080001c4  000011c4  2**2
+  1 .text         0000097c  080001c4  080001c4  000011c4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000000  080002c8  080002d0  000012d0  2**0
+  2 .rodata       00000000  08000b40  08000b48  00001b48  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  3 .ARM.extab    00000000  080002c8  080002c8  000012d0  2**0
+  3 .ARM.extab    00000000  08000b40  08000b40  00001b48  2**0
                   CONTENTS
-  4 .ARM          00000000  080002c8  080002c8  000012d0  2**0
+  4 .ARM          00000000  08000b40  08000b40  00001b48  2**0
                   CONTENTS
-  5 .preinit_array 00000000  080002c8  080002d0  000012d0  2**0
+  5 .preinit_array 00000000  08000b40  08000b48  00001b48  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  080002c8  080002c8  000012c8  2**2
+  6 .init_array   00000004  08000b40  08000b40  00001b40  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .fini_array   00000004  080002cc  080002cc  000012cc  2**2
+  7 .fini_array   00000004  08000b44  08000b44  00001b44  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .data         00000000  20000000  20000000  000012d0  2**0
+  8 .data         00000000  20000000  20000000  00001b48  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          0000001c  20000000  080002d0  00002000  2**2
+  9 .bss          0000001c  20000000  08000b48  00002000  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  2000001c  080002d0  0000201c  2**0
+ 10 ._user_heap_stack 00000604  2000001c  08000b48  0000201c  2**0
                   ALLOC
- 11 .ARM.attributes 00000030  00000000  00000000  000012d0  2**0
+ 11 .ARM.attributes 00000030  00000000  00000000  00001b48  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00000078  00000000  00000000  00001300  2**0
+ 12 .debug_info   000014f3  00000000  00000000  00001b78  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 0000005e  00000000  00000000  00001378  2**0
+ 13 .debug_abbrev 000003c0  00000000  00000000  0000306b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000048  00000000  00000000  000013d8  2**3
+ 14 .debug_aranges 000000b8  00000000  00000000  00003430  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 0000002c  00000000  00000000  00001420  2**0
+ 15 .debug_rnglists 0000007d  00000000  00000000  000034e8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00000011  00000000  00000000  0000144c  2**0
+ 16 .debug_macro  00000c0c  00000000  00000000  00003565  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   000000b9  00000000  00000000  0000145d  2**0
+ 17 .debug_line   000008fc  00000000  00000000  00004171  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00002e41  00000000  00000000  00001516  2**0
+ 18 .debug_str    00003c8d  00000000  00000000  00004a6d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  00004357  2**0
+ 19 .comment      00000043  00000000  00000000  000086fa  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000005c  00000000  00000000  0000439c  2**2
+ 20 .debug_frame  000001b4  00000000  00000000  00008740  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000068  00000000  00000000  000043f8  2**0
+ 21 .debug_line_str 00000068  00000000  00000000  000088f4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -64,7 +64,7 @@ Disassembly of section .text:
  80001da:	bd10      	pop	{r4, pc}
  80001dc:	20000000 	.word	0x20000000
  80001e0:	00000000 	.word	0x00000000
- 80001e4:	080002b0 	.word	0x080002b0
+ 80001e4:	08000b28 	.word	0x08000b28
 
 080001e8 <frame_dummy>:
  80001e8:	b508      	push	{r3, lr}
@@ -76,174 +76,1426 @@ Disassembly of section .text:
  80001f6:	bd08      	pop	{r3, pc}
  80001f8:	00000000 	.word	0x00000000
  80001fc:	20000004 	.word	0x20000004
- 8000200:	080002b0 	.word	0x080002b0
+ 8000200:	08000b28 	.word	0x08000b28
 
-08000204 <main>:
+08000204 <vDoConfigurePin>:
+ */
+#include "std_types.h"
+#include "memmap_gpio.h"
 
+void vDoConfigurePin(gpio_ports Port, gpio_pins Pin, eModesForGPIOx_MODER u2Mode)
+{
+ 8000204:	b480      	push	{r7}
+ 8000206:	b085      	sub	sp, #20
+ 8000208:	af00      	add	r7, sp, #0
+ 800020a:	4603      	mov	r3, r0
+ 800020c:	71fb      	strb	r3, [r7, #7]
+ 800020e:	460b      	mov	r3, r1
+ 8000210:	71bb      	strb	r3, [r7, #6]
+ 8000212:	4613      	mov	r3, r2
+ 8000214:	717b      	strb	r3, [r7, #5]
+    // Calculate the position of the pin in the MODER register
+	uint32 position = Pin * 2;
+ 8000216:	79bb      	ldrb	r3, [r7, #6]
+ 8000218:	005b      	lsls	r3, r3, #1
+ 800021a:	60fb      	str	r3, [r7, #12]
 
+    switch (Port)
+ 800021c:	79fb      	ldrb	r3, [r7, #7]
+ 800021e:	2b07      	cmp	r3, #7
+ 8000220:	f200 80c4 	bhi.w	80003ac <vDoConfigurePin+0x1a8>
+ 8000224:	a201      	add	r2, pc, #4	@ (adr r2, 800022c <vDoConfigurePin+0x28>)
+ 8000226:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 800022a:	bf00      	nop
+ 800022c:	0800024d 	.word	0x0800024d
+ 8000230:	08000279 	.word	0x08000279
+ 8000234:	080002a5 	.word	0x080002a5
+ 8000238:	080002d1 	.word	0x080002d1
+ 800023c:	080002fd 	.word	0x080002fd
+ 8000240:	08000329 	.word	0x08000329
+ 8000244:	08000355 	.word	0x08000355
+ 8000248:	08000381 	.word	0x08000381
+    {
+        case PORTA:
+            // Clear the existing mode for the specified pin
+            AHB1_GPIOA->GPIOx_MODER.GPIOx_MODER_Reg &= ~(0x3 << position);
+ 800024c:	4b5b      	ldr	r3, [pc, #364]	@ (80003bc <vDoConfigurePin+0x1b8>)
+ 800024e:	681b      	ldr	r3, [r3, #0]
+ 8000250:	2103      	movs	r1, #3
+ 8000252:	68fa      	ldr	r2, [r7, #12]
+ 8000254:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000258:	43d2      	mvns	r2, r2
+ 800025a:	4611      	mov	r1, r2
+ 800025c:	4a57      	ldr	r2, [pc, #348]	@ (80003bc <vDoConfigurePin+0x1b8>)
+ 800025e:	400b      	ands	r3, r1
+ 8000260:	6013      	str	r3, [r2, #0]
+            // Set the new mode for the specified pin
+            AHB1_GPIOA->GPIOx_MODER.GPIOx_MODER_Reg |= (u2Mode) << position;
+ 8000262:	4b56      	ldr	r3, [pc, #344]	@ (80003bc <vDoConfigurePin+0x1b8>)
+ 8000264:	681b      	ldr	r3, [r3, #0]
+ 8000266:	7979      	ldrb	r1, [r7, #5]
+ 8000268:	68fa      	ldr	r2, [r7, #12]
+ 800026a:	fa01 f202 	lsl.w	r2, r1, r2
+ 800026e:	4611      	mov	r1, r2
+ 8000270:	4a52      	ldr	r2, [pc, #328]	@ (80003bc <vDoConfigurePin+0x1b8>)
+ 8000272:	430b      	orrs	r3, r1
+ 8000274:	6013      	str	r3, [r2, #0]
+            break; // Exit the switch after each case
+ 8000276:	e09a      	b.n	80003ae <vDoConfigurePin+0x1aa>
+        case PORTB:
+            // Clear the existing mode for the specified pin
+            AHB1_GPIOB->GPIOx_MODER.GPIOx_MODER_Reg &= ~(0x3 << position);
+ 8000278:	4b51      	ldr	r3, [pc, #324]	@ (80003c0 <vDoConfigurePin+0x1bc>)
+ 800027a:	681b      	ldr	r3, [r3, #0]
+ 800027c:	2103      	movs	r1, #3
+ 800027e:	68fa      	ldr	r2, [r7, #12]
+ 8000280:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000284:	43d2      	mvns	r2, r2
+ 8000286:	4611      	mov	r1, r2
+ 8000288:	4a4d      	ldr	r2, [pc, #308]	@ (80003c0 <vDoConfigurePin+0x1bc>)
+ 800028a:	400b      	ands	r3, r1
+ 800028c:	6013      	str	r3, [r2, #0]
+            // Set the new mode for the specified pin
+            AHB1_GPIOB->GPIOx_MODER.GPIOx_MODER_Reg |= (u2Mode) << position;
+ 800028e:	4b4c      	ldr	r3, [pc, #304]	@ (80003c0 <vDoConfigurePin+0x1bc>)
+ 8000290:	681b      	ldr	r3, [r3, #0]
+ 8000292:	7979      	ldrb	r1, [r7, #5]
+ 8000294:	68fa      	ldr	r2, [r7, #12]
+ 8000296:	fa01 f202 	lsl.w	r2, r1, r2
+ 800029a:	4611      	mov	r1, r2
+ 800029c:	4a48      	ldr	r2, [pc, #288]	@ (80003c0 <vDoConfigurePin+0x1bc>)
+ 800029e:	430b      	orrs	r3, r1
+ 80002a0:	6013      	str	r3, [r2, #0]
+            break;
+ 80002a2:	e084      	b.n	80003ae <vDoConfigurePin+0x1aa>
+        case PORTC:
+            // Clear the existing mode for the specified pin
+            AHB1_GPIOC->GPIOx_MODER.GPIOx_MODER_Reg &= ~(0x3 << position);
+ 80002a4:	4b47      	ldr	r3, [pc, #284]	@ (80003c4 <vDoConfigurePin+0x1c0>)
+ 80002a6:	681b      	ldr	r3, [r3, #0]
+ 80002a8:	2103      	movs	r1, #3
+ 80002aa:	68fa      	ldr	r2, [r7, #12]
+ 80002ac:	fa01 f202 	lsl.w	r2, r1, r2
+ 80002b0:	43d2      	mvns	r2, r2
+ 80002b2:	4611      	mov	r1, r2
+ 80002b4:	4a43      	ldr	r2, [pc, #268]	@ (80003c4 <vDoConfigurePin+0x1c0>)
+ 80002b6:	400b      	ands	r3, r1
+ 80002b8:	6013      	str	r3, [r2, #0]
+            // Set the new mode for the specified pin
+            AHB1_GPIOC->GPIOx_MODER.GPIOx_MODER_Reg |= (u2Mode) << position;
+ 80002ba:	4b42      	ldr	r3, [pc, #264]	@ (80003c4 <vDoConfigurePin+0x1c0>)
+ 80002bc:	681b      	ldr	r3, [r3, #0]
+ 80002be:	7979      	ldrb	r1, [r7, #5]
+ 80002c0:	68fa      	ldr	r2, [r7, #12]
+ 80002c2:	fa01 f202 	lsl.w	r2, r1, r2
+ 80002c6:	4611      	mov	r1, r2
+ 80002c8:	4a3e      	ldr	r2, [pc, #248]	@ (80003c4 <vDoConfigurePin+0x1c0>)
+ 80002ca:	430b      	orrs	r3, r1
+ 80002cc:	6013      	str	r3, [r2, #0]
+            break;
+ 80002ce:	e06e      	b.n	80003ae <vDoConfigurePin+0x1aa>
+        case PORTD:
+            // Clear the existing mode for the specified pin
+            AHB1_GPIOD->GPIOx_MODER.GPIOx_MODER_Reg &= ~(0x3 << position);
+ 80002d0:	4b3d      	ldr	r3, [pc, #244]	@ (80003c8 <vDoConfigurePin+0x1c4>)
+ 80002d2:	681b      	ldr	r3, [r3, #0]
+ 80002d4:	2103      	movs	r1, #3
+ 80002d6:	68fa      	ldr	r2, [r7, #12]
+ 80002d8:	fa01 f202 	lsl.w	r2, r1, r2
+ 80002dc:	43d2      	mvns	r2, r2
+ 80002de:	4611      	mov	r1, r2
+ 80002e0:	4a39      	ldr	r2, [pc, #228]	@ (80003c8 <vDoConfigurePin+0x1c4>)
+ 80002e2:	400b      	ands	r3, r1
+ 80002e4:	6013      	str	r3, [r2, #0]
+            // Set the new mode for the specified pin
+            AHB1_GPIOD->GPIOx_MODER.GPIOx_MODER_Reg |= (u2Mode) << position;
+ 80002e6:	4b38      	ldr	r3, [pc, #224]	@ (80003c8 <vDoConfigurePin+0x1c4>)
+ 80002e8:	681b      	ldr	r3, [r3, #0]
+ 80002ea:	7979      	ldrb	r1, [r7, #5]
+ 80002ec:	68fa      	ldr	r2, [r7, #12]
+ 80002ee:	fa01 f202 	lsl.w	r2, r1, r2
+ 80002f2:	4611      	mov	r1, r2
+ 80002f4:	4a34      	ldr	r2, [pc, #208]	@ (80003c8 <vDoConfigurePin+0x1c4>)
+ 80002f6:	430b      	orrs	r3, r1
+ 80002f8:	6013      	str	r3, [r2, #0]
+            break;
+ 80002fa:	e058      	b.n	80003ae <vDoConfigurePin+0x1aa>
+        case PORTE:
+            // Clear the existing mode for the specified pin
+            AHB1_GPIOE->GPIOx_MODER.GPIOx_MODER_Reg &= ~(0x3 << position);
+ 80002fc:	4b33      	ldr	r3, [pc, #204]	@ (80003cc <vDoConfigurePin+0x1c8>)
+ 80002fe:	681b      	ldr	r3, [r3, #0]
+ 8000300:	2103      	movs	r1, #3
+ 8000302:	68fa      	ldr	r2, [r7, #12]
+ 8000304:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000308:	43d2      	mvns	r2, r2
+ 800030a:	4611      	mov	r1, r2
+ 800030c:	4a2f      	ldr	r2, [pc, #188]	@ (80003cc <vDoConfigurePin+0x1c8>)
+ 800030e:	400b      	ands	r3, r1
+ 8000310:	6013      	str	r3, [r2, #0]
+            // Set the new mode for the specified pin
+            AHB1_GPIOE->GPIOx_MODER.GPIOx_MODER_Reg |= (u2Mode) << position;
+ 8000312:	4b2e      	ldr	r3, [pc, #184]	@ (80003cc <vDoConfigurePin+0x1c8>)
+ 8000314:	681b      	ldr	r3, [r3, #0]
+ 8000316:	7979      	ldrb	r1, [r7, #5]
+ 8000318:	68fa      	ldr	r2, [r7, #12]
+ 800031a:	fa01 f202 	lsl.w	r2, r1, r2
+ 800031e:	4611      	mov	r1, r2
+ 8000320:	4a2a      	ldr	r2, [pc, #168]	@ (80003cc <vDoConfigurePin+0x1c8>)
+ 8000322:	430b      	orrs	r3, r1
+ 8000324:	6013      	str	r3, [r2, #0]
+            break;
+ 8000326:	e042      	b.n	80003ae <vDoConfigurePin+0x1aa>
+        case PORTF:
+            // Clear the existing mode for the specified pin
+            AHB1_GPIOF->GPIOx_MODER.GPIOx_MODER_Reg &= ~(0x3 << position);
+ 8000328:	4b29      	ldr	r3, [pc, #164]	@ (80003d0 <vDoConfigurePin+0x1cc>)
+ 800032a:	681b      	ldr	r3, [r3, #0]
+ 800032c:	2103      	movs	r1, #3
+ 800032e:	68fa      	ldr	r2, [r7, #12]
+ 8000330:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000334:	43d2      	mvns	r2, r2
+ 8000336:	4611      	mov	r1, r2
+ 8000338:	4a25      	ldr	r2, [pc, #148]	@ (80003d0 <vDoConfigurePin+0x1cc>)
+ 800033a:	400b      	ands	r3, r1
+ 800033c:	6013      	str	r3, [r2, #0]
+            // Set the new mode for the specified pin
+            AHB1_GPIOF->GPIOx_MODER.GPIOx_MODER_Reg |= (u2Mode) << position;
+ 800033e:	4b24      	ldr	r3, [pc, #144]	@ (80003d0 <vDoConfigurePin+0x1cc>)
+ 8000340:	681b      	ldr	r3, [r3, #0]
+ 8000342:	7979      	ldrb	r1, [r7, #5]
+ 8000344:	68fa      	ldr	r2, [r7, #12]
+ 8000346:	fa01 f202 	lsl.w	r2, r1, r2
+ 800034a:	4611      	mov	r1, r2
+ 800034c:	4a20      	ldr	r2, [pc, #128]	@ (80003d0 <vDoConfigurePin+0x1cc>)
+ 800034e:	430b      	orrs	r3, r1
+ 8000350:	6013      	str	r3, [r2, #0]
+            break;
+ 8000352:	e02c      	b.n	80003ae <vDoConfigurePin+0x1aa>
+        case PORTG:
+            // Clear the existing mode for the specified pin
+            AHB1_GPIOG->GPIOx_MODER.GPIOx_MODER_Reg &= ~(0x3 << position);
+ 8000354:	4b1f      	ldr	r3, [pc, #124]	@ (80003d4 <vDoConfigurePin+0x1d0>)
+ 8000356:	681b      	ldr	r3, [r3, #0]
+ 8000358:	2103      	movs	r1, #3
+ 800035a:	68fa      	ldr	r2, [r7, #12]
+ 800035c:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000360:	43d2      	mvns	r2, r2
+ 8000362:	4611      	mov	r1, r2
+ 8000364:	4a1b      	ldr	r2, [pc, #108]	@ (80003d4 <vDoConfigurePin+0x1d0>)
+ 8000366:	400b      	ands	r3, r1
+ 8000368:	6013      	str	r3, [r2, #0]
+            // Set the new mode for the specified pin
+            AHB1_GPIOG->GPIOx_MODER.GPIOx_MODER_Reg |= (u2Mode) << position;
+ 800036a:	4b1a      	ldr	r3, [pc, #104]	@ (80003d4 <vDoConfigurePin+0x1d0>)
+ 800036c:	681b      	ldr	r3, [r3, #0]
+ 800036e:	7979      	ldrb	r1, [r7, #5]
+ 8000370:	68fa      	ldr	r2, [r7, #12]
+ 8000372:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000376:	4611      	mov	r1, r2
+ 8000378:	4a16      	ldr	r2, [pc, #88]	@ (80003d4 <vDoConfigurePin+0x1d0>)
+ 800037a:	430b      	orrs	r3, r1
+ 800037c:	6013      	str	r3, [r2, #0]
+            break;
+ 800037e:	e016      	b.n	80003ae <vDoConfigurePin+0x1aa>
+        case PORTH:
+            // Clear the existing mode for the specified pin
+            AHB1_GPIOH->GPIOx_MODER.GPIOx_MODER_Reg &= ~(0x3 << position);
+ 8000380:	4b15      	ldr	r3, [pc, #84]	@ (80003d8 <vDoConfigurePin+0x1d4>)
+ 8000382:	681b      	ldr	r3, [r3, #0]
+ 8000384:	2103      	movs	r1, #3
+ 8000386:	68fa      	ldr	r2, [r7, #12]
+ 8000388:	fa01 f202 	lsl.w	r2, r1, r2
+ 800038c:	43d2      	mvns	r2, r2
+ 800038e:	4611      	mov	r1, r2
+ 8000390:	4a11      	ldr	r2, [pc, #68]	@ (80003d8 <vDoConfigurePin+0x1d4>)
+ 8000392:	400b      	ands	r3, r1
+ 8000394:	6013      	str	r3, [r2, #0]
+            // Set the new mode for the specified pin
+            AHB1_GPIOH->GPIOx_MODER.GPIOx_MODER_Reg |= (u2Mode) << position;
+ 8000396:	4b10      	ldr	r3, [pc, #64]	@ (80003d8 <vDoConfigurePin+0x1d4>)
+ 8000398:	681b      	ldr	r3, [r3, #0]
+ 800039a:	7979      	ldrb	r1, [r7, #5]
+ 800039c:	68fa      	ldr	r2, [r7, #12]
+ 800039e:	fa01 f202 	lsl.w	r2, r1, r2
+ 80003a2:	4611      	mov	r1, r2
+ 80003a4:	4a0c      	ldr	r2, [pc, #48]	@ (80003d8 <vDoConfigurePin+0x1d4>)
+ 80003a6:	430b      	orrs	r3, r1
+ 80003a8:	6013      	str	r3, [r2, #0]
+            break;
+ 80003aa:	e000      	b.n	80003ae <vDoConfigurePin+0x1aa>
+        default:
+            // Invalid port, do nothing or handle the error accordingly
+            break;
+ 80003ac:	bf00      	nop
+    }
+}
+ 80003ae:	bf00      	nop
+ 80003b0:	3714      	adds	r7, #20
+ 80003b2:	46bd      	mov	sp, r7
+ 80003b4:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80003b8:	4770      	bx	lr
+ 80003ba:	bf00      	nop
+ 80003bc:	40020000 	.word	0x40020000
+ 80003c0:	40020400 	.word	0x40020400
+ 80003c4:	40020800 	.word	0x40020800
+ 80003c8:	40020c00 	.word	0x40020c00
+ 80003cc:	40021000 	.word	0x40021000
+ 80003d0:	40021400 	.word	0x40021400
+ 80003d4:	40021800 	.word	0x40021800
+ 80003d8:	40021c00 	.word	0x40021c00
+
+080003dc <vDoSelectPinSpeed>:
+ * Very High Speed:
+ *   Used for high-performance applications such as display drivers or high-speed communications.
+ */
+
+void vDoSelectPinSpeed(gpio_ports Port, gpio_pins Pin, eModesForGPIOx_OSPEEDR pin_speed)
+{
+ 80003dc:	b480      	push	{r7}
+ 80003de:	b085      	sub	sp, #20
+ 80003e0:	af00      	add	r7, sp, #0
+ 80003e2:	4603      	mov	r3, r0
+ 80003e4:	71fb      	strb	r3, [r7, #7]
+ 80003e6:	460b      	mov	r3, r1
+ 80003e8:	71bb      	strb	r3, [r7, #6]
+ 80003ea:	4613      	mov	r3, r2
+ 80003ec:	717b      	strb	r3, [r7, #5]
+    // Calculate the position of the pin in the OSPEEDR register
+    uint32 position = Pin * 2;
+ 80003ee:	79bb      	ldrb	r3, [r7, #6]
+ 80003f0:	005b      	lsls	r3, r3, #1
+ 80003f2:	60fb      	str	r3, [r7, #12]
+
+    switch (Port)
+ 80003f4:	79fb      	ldrb	r3, [r7, #7]
+ 80003f6:	2b07      	cmp	r3, #7
+ 80003f8:	f200 80c4 	bhi.w	8000584 <vDoSelectPinSpeed+0x1a8>
+ 80003fc:	a201      	add	r2, pc, #4	@ (adr r2, 8000404 <vDoSelectPinSpeed+0x28>)
+ 80003fe:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 8000402:	bf00      	nop
+ 8000404:	08000425 	.word	0x08000425
+ 8000408:	08000451 	.word	0x08000451
+ 800040c:	0800047d 	.word	0x0800047d
+ 8000410:	080004a9 	.word	0x080004a9
+ 8000414:	080004d5 	.word	0x080004d5
+ 8000418:	08000501 	.word	0x08000501
+ 800041c:	0800052d 	.word	0x0800052d
+ 8000420:	08000559 	.word	0x08000559
+    {
+        case PORTA:
+            // Clear the existing speed for the specified pin
+            AHB1_GPIOA->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg &= ~(0x03 << position);
+ 8000424:	4b5b      	ldr	r3, [pc, #364]	@ (8000594 <vDoSelectPinSpeed+0x1b8>)
+ 8000426:	689b      	ldr	r3, [r3, #8]
+ 8000428:	2103      	movs	r1, #3
+ 800042a:	68fa      	ldr	r2, [r7, #12]
+ 800042c:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000430:	43d2      	mvns	r2, r2
+ 8000432:	4611      	mov	r1, r2
+ 8000434:	4a57      	ldr	r2, [pc, #348]	@ (8000594 <vDoSelectPinSpeed+0x1b8>)
+ 8000436:	400b      	ands	r3, r1
+ 8000438:	6093      	str	r3, [r2, #8]
+            // Set the new pin speed for the specified pin
+            AHB1_GPIOA->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg |= (pin_speed << position);
+ 800043a:	4b56      	ldr	r3, [pc, #344]	@ (8000594 <vDoSelectPinSpeed+0x1b8>)
+ 800043c:	689b      	ldr	r3, [r3, #8]
+ 800043e:	7979      	ldrb	r1, [r7, #5]
+ 8000440:	68fa      	ldr	r2, [r7, #12]
+ 8000442:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000446:	4611      	mov	r1, r2
+ 8000448:	4a52      	ldr	r2, [pc, #328]	@ (8000594 <vDoSelectPinSpeed+0x1b8>)
+ 800044a:	430b      	orrs	r3, r1
+ 800044c:	6093      	str	r3, [r2, #8]
+            break; // Exit the switch after each case
+ 800044e:	e09a      	b.n	8000586 <vDoSelectPinSpeed+0x1aa>
+        case PORTB:
+            // Clear the existing speed for the specified pin
+            AHB1_GPIOB->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg &= ~(0x03 << position);
+ 8000450:	4b51      	ldr	r3, [pc, #324]	@ (8000598 <vDoSelectPinSpeed+0x1bc>)
+ 8000452:	689b      	ldr	r3, [r3, #8]
+ 8000454:	2103      	movs	r1, #3
+ 8000456:	68fa      	ldr	r2, [r7, #12]
+ 8000458:	fa01 f202 	lsl.w	r2, r1, r2
+ 800045c:	43d2      	mvns	r2, r2
+ 800045e:	4611      	mov	r1, r2
+ 8000460:	4a4d      	ldr	r2, [pc, #308]	@ (8000598 <vDoSelectPinSpeed+0x1bc>)
+ 8000462:	400b      	ands	r3, r1
+ 8000464:	6093      	str	r3, [r2, #8]
+            // Set the new pin speed for the specified pin
+            AHB1_GPIOB->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg |= (pin_speed << position);
+ 8000466:	4b4c      	ldr	r3, [pc, #304]	@ (8000598 <vDoSelectPinSpeed+0x1bc>)
+ 8000468:	689b      	ldr	r3, [r3, #8]
+ 800046a:	7979      	ldrb	r1, [r7, #5]
+ 800046c:	68fa      	ldr	r2, [r7, #12]
+ 800046e:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000472:	4611      	mov	r1, r2
+ 8000474:	4a48      	ldr	r2, [pc, #288]	@ (8000598 <vDoSelectPinSpeed+0x1bc>)
+ 8000476:	430b      	orrs	r3, r1
+ 8000478:	6093      	str	r3, [r2, #8]
+            break;
+ 800047a:	e084      	b.n	8000586 <vDoSelectPinSpeed+0x1aa>
+        case PORTC:
+            // Clear the existing speed for the specified pin
+            AHB1_GPIOC->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg &= ~(0x03 << position);
+ 800047c:	4b47      	ldr	r3, [pc, #284]	@ (800059c <vDoSelectPinSpeed+0x1c0>)
+ 800047e:	689b      	ldr	r3, [r3, #8]
+ 8000480:	2103      	movs	r1, #3
+ 8000482:	68fa      	ldr	r2, [r7, #12]
+ 8000484:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000488:	43d2      	mvns	r2, r2
+ 800048a:	4611      	mov	r1, r2
+ 800048c:	4a43      	ldr	r2, [pc, #268]	@ (800059c <vDoSelectPinSpeed+0x1c0>)
+ 800048e:	400b      	ands	r3, r1
+ 8000490:	6093      	str	r3, [r2, #8]
+            // Set the new pin speed for the specified pin
+            AHB1_GPIOC->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg |= (pin_speed << position);
+ 8000492:	4b42      	ldr	r3, [pc, #264]	@ (800059c <vDoSelectPinSpeed+0x1c0>)
+ 8000494:	689b      	ldr	r3, [r3, #8]
+ 8000496:	7979      	ldrb	r1, [r7, #5]
+ 8000498:	68fa      	ldr	r2, [r7, #12]
+ 800049a:	fa01 f202 	lsl.w	r2, r1, r2
+ 800049e:	4611      	mov	r1, r2
+ 80004a0:	4a3e      	ldr	r2, [pc, #248]	@ (800059c <vDoSelectPinSpeed+0x1c0>)
+ 80004a2:	430b      	orrs	r3, r1
+ 80004a4:	6093      	str	r3, [r2, #8]
+            break;
+ 80004a6:	e06e      	b.n	8000586 <vDoSelectPinSpeed+0x1aa>
+        case PORTD:
+            // Clear the existing speed for the specified pin
+            AHB1_GPIOD->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg &= ~(0x03 << position);
+ 80004a8:	4b3d      	ldr	r3, [pc, #244]	@ (80005a0 <vDoSelectPinSpeed+0x1c4>)
+ 80004aa:	689b      	ldr	r3, [r3, #8]
+ 80004ac:	2103      	movs	r1, #3
+ 80004ae:	68fa      	ldr	r2, [r7, #12]
+ 80004b0:	fa01 f202 	lsl.w	r2, r1, r2
+ 80004b4:	43d2      	mvns	r2, r2
+ 80004b6:	4611      	mov	r1, r2
+ 80004b8:	4a39      	ldr	r2, [pc, #228]	@ (80005a0 <vDoSelectPinSpeed+0x1c4>)
+ 80004ba:	400b      	ands	r3, r1
+ 80004bc:	6093      	str	r3, [r2, #8]
+            // Set the new pin speed for the specified pin
+            AHB1_GPIOD->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg |= (pin_speed << position);
+ 80004be:	4b38      	ldr	r3, [pc, #224]	@ (80005a0 <vDoSelectPinSpeed+0x1c4>)
+ 80004c0:	689b      	ldr	r3, [r3, #8]
+ 80004c2:	7979      	ldrb	r1, [r7, #5]
+ 80004c4:	68fa      	ldr	r2, [r7, #12]
+ 80004c6:	fa01 f202 	lsl.w	r2, r1, r2
+ 80004ca:	4611      	mov	r1, r2
+ 80004cc:	4a34      	ldr	r2, [pc, #208]	@ (80005a0 <vDoSelectPinSpeed+0x1c4>)
+ 80004ce:	430b      	orrs	r3, r1
+ 80004d0:	6093      	str	r3, [r2, #8]
+            break;
+ 80004d2:	e058      	b.n	8000586 <vDoSelectPinSpeed+0x1aa>
+        case PORTE:
+            // Clear the existing speed for the specified pin
+            AHB1_GPIOE->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg &= ~(0x03 << position);
+ 80004d4:	4b33      	ldr	r3, [pc, #204]	@ (80005a4 <vDoSelectPinSpeed+0x1c8>)
+ 80004d6:	689b      	ldr	r3, [r3, #8]
+ 80004d8:	2103      	movs	r1, #3
+ 80004da:	68fa      	ldr	r2, [r7, #12]
+ 80004dc:	fa01 f202 	lsl.w	r2, r1, r2
+ 80004e0:	43d2      	mvns	r2, r2
+ 80004e2:	4611      	mov	r1, r2
+ 80004e4:	4a2f      	ldr	r2, [pc, #188]	@ (80005a4 <vDoSelectPinSpeed+0x1c8>)
+ 80004e6:	400b      	ands	r3, r1
+ 80004e8:	6093      	str	r3, [r2, #8]
+            // Set the new pin speed for the specified pin
+            AHB1_GPIOE->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg |= (pin_speed << position);
+ 80004ea:	4b2e      	ldr	r3, [pc, #184]	@ (80005a4 <vDoSelectPinSpeed+0x1c8>)
+ 80004ec:	689b      	ldr	r3, [r3, #8]
+ 80004ee:	7979      	ldrb	r1, [r7, #5]
+ 80004f0:	68fa      	ldr	r2, [r7, #12]
+ 80004f2:	fa01 f202 	lsl.w	r2, r1, r2
+ 80004f6:	4611      	mov	r1, r2
+ 80004f8:	4a2a      	ldr	r2, [pc, #168]	@ (80005a4 <vDoSelectPinSpeed+0x1c8>)
+ 80004fa:	430b      	orrs	r3, r1
+ 80004fc:	6093      	str	r3, [r2, #8]
+            break;
+ 80004fe:	e042      	b.n	8000586 <vDoSelectPinSpeed+0x1aa>
+        case PORTF:
+            // Clear the existing speed for the specified pin
+            AHB1_GPIOF->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg &= ~(0x03 << position);
+ 8000500:	4b29      	ldr	r3, [pc, #164]	@ (80005a8 <vDoSelectPinSpeed+0x1cc>)
+ 8000502:	689b      	ldr	r3, [r3, #8]
+ 8000504:	2103      	movs	r1, #3
+ 8000506:	68fa      	ldr	r2, [r7, #12]
+ 8000508:	fa01 f202 	lsl.w	r2, r1, r2
+ 800050c:	43d2      	mvns	r2, r2
+ 800050e:	4611      	mov	r1, r2
+ 8000510:	4a25      	ldr	r2, [pc, #148]	@ (80005a8 <vDoSelectPinSpeed+0x1cc>)
+ 8000512:	400b      	ands	r3, r1
+ 8000514:	6093      	str	r3, [r2, #8]
+            // Set the new pin speed for the specified pin
+            AHB1_GPIOF->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg |= (pin_speed << position);
+ 8000516:	4b24      	ldr	r3, [pc, #144]	@ (80005a8 <vDoSelectPinSpeed+0x1cc>)
+ 8000518:	689b      	ldr	r3, [r3, #8]
+ 800051a:	7979      	ldrb	r1, [r7, #5]
+ 800051c:	68fa      	ldr	r2, [r7, #12]
+ 800051e:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000522:	4611      	mov	r1, r2
+ 8000524:	4a20      	ldr	r2, [pc, #128]	@ (80005a8 <vDoSelectPinSpeed+0x1cc>)
+ 8000526:	430b      	orrs	r3, r1
+ 8000528:	6093      	str	r3, [r2, #8]
+            break;
+ 800052a:	e02c      	b.n	8000586 <vDoSelectPinSpeed+0x1aa>
+        case PORTG:
+            // Clear the existing speed for the specified pin
+            AHB1_GPIOG->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg &= ~(0x03 << position);
+ 800052c:	4b1f      	ldr	r3, [pc, #124]	@ (80005ac <vDoSelectPinSpeed+0x1d0>)
+ 800052e:	689b      	ldr	r3, [r3, #8]
+ 8000530:	2103      	movs	r1, #3
+ 8000532:	68fa      	ldr	r2, [r7, #12]
+ 8000534:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000538:	43d2      	mvns	r2, r2
+ 800053a:	4611      	mov	r1, r2
+ 800053c:	4a1b      	ldr	r2, [pc, #108]	@ (80005ac <vDoSelectPinSpeed+0x1d0>)
+ 800053e:	400b      	ands	r3, r1
+ 8000540:	6093      	str	r3, [r2, #8]
+            // Set the new pin speed for the specified pin
+            AHB1_GPIOG->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg |= (pin_speed << position);
+ 8000542:	4b1a      	ldr	r3, [pc, #104]	@ (80005ac <vDoSelectPinSpeed+0x1d0>)
+ 8000544:	689b      	ldr	r3, [r3, #8]
+ 8000546:	7979      	ldrb	r1, [r7, #5]
+ 8000548:	68fa      	ldr	r2, [r7, #12]
+ 800054a:	fa01 f202 	lsl.w	r2, r1, r2
+ 800054e:	4611      	mov	r1, r2
+ 8000550:	4a16      	ldr	r2, [pc, #88]	@ (80005ac <vDoSelectPinSpeed+0x1d0>)
+ 8000552:	430b      	orrs	r3, r1
+ 8000554:	6093      	str	r3, [r2, #8]
+            break;
+ 8000556:	e016      	b.n	8000586 <vDoSelectPinSpeed+0x1aa>
+        case PORTH:
+            // Clear the existing speed for the specified pin
+            AHB1_GPIOH->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg &= ~(0x03 << position);
+ 8000558:	4b15      	ldr	r3, [pc, #84]	@ (80005b0 <vDoSelectPinSpeed+0x1d4>)
+ 800055a:	689b      	ldr	r3, [r3, #8]
+ 800055c:	2103      	movs	r1, #3
+ 800055e:	68fa      	ldr	r2, [r7, #12]
+ 8000560:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000564:	43d2      	mvns	r2, r2
+ 8000566:	4611      	mov	r1, r2
+ 8000568:	4a11      	ldr	r2, [pc, #68]	@ (80005b0 <vDoSelectPinSpeed+0x1d4>)
+ 800056a:	400b      	ands	r3, r1
+ 800056c:	6093      	str	r3, [r2, #8]
+            // Set the new pin speed for the specified pin
+            AHB1_GPIOH->GPIOx_OSPEEDR.GPIOx_OSPEEDR_Reg |= (pin_speed << position);
+ 800056e:	4b10      	ldr	r3, [pc, #64]	@ (80005b0 <vDoSelectPinSpeed+0x1d4>)
+ 8000570:	689b      	ldr	r3, [r3, #8]
+ 8000572:	7979      	ldrb	r1, [r7, #5]
+ 8000574:	68fa      	ldr	r2, [r7, #12]
+ 8000576:	fa01 f202 	lsl.w	r2, r1, r2
+ 800057a:	4611      	mov	r1, r2
+ 800057c:	4a0c      	ldr	r2, [pc, #48]	@ (80005b0 <vDoSelectPinSpeed+0x1d4>)
+ 800057e:	430b      	orrs	r3, r1
+ 8000580:	6093      	str	r3, [r2, #8]
+            break;
+ 8000582:	e000      	b.n	8000586 <vDoSelectPinSpeed+0x1aa>
+        default:
+            // Invalid port, do nothing or handle the error accordingly
+            break;
+ 8000584:	bf00      	nop
+    }
+}
+ 8000586:	bf00      	nop
+ 8000588:	3714      	adds	r7, #20
+ 800058a:	46bd      	mov	sp, r7
+ 800058c:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000590:	4770      	bx	lr
+ 8000592:	bf00      	nop
+ 8000594:	40020000 	.word	0x40020000
+ 8000598:	40020400 	.word	0x40020400
+ 800059c:	40020800 	.word	0x40020800
+ 80005a0:	40020c00 	.word	0x40020c00
+ 80005a4:	40021000 	.word	0x40021000
+ 80005a8:	40021400 	.word	0x40021400
+ 80005ac:	40021800 	.word	0x40021800
+ 80005b0:	40021c00 	.word	0x40021c00
+
+080005b4 <vDoCfgOutTypePins>:
+ * Behavior: When the pin is configured for a logic level "1", it is "inactive" and does not supply any voltage.
+ * At a logic level "0", it connects the pin to ground, allowing the load to sink current to GND.
+ */
+
+void vDoCfgOutTypePins(gpio_ports Port, gpio_pins Pin, eModesForPIOx_OTYPER output_type)
+{
+ 80005b4:	b480      	push	{r7}
+ 80005b6:	b085      	sub	sp, #20
+ 80005b8:	af00      	add	r7, sp, #0
+ 80005ba:	4603      	mov	r3, r0
+ 80005bc:	71fb      	strb	r3, [r7, #7]
+ 80005be:	460b      	mov	r3, r1
+ 80005c0:	71bb      	strb	r3, [r7, #6]
+ 80005c2:	4613      	mov	r3, r2
+ 80005c4:	717b      	strb	r3, [r7, #5]
+    // Calculate the position of the pin in the OTYPER register
+	uint32 position = Pin;
+ 80005c6:	79bb      	ldrb	r3, [r7, #6]
+ 80005c8:	60fb      	str	r3, [r7, #12]
+
+    switch (Port)
+ 80005ca:	79fb      	ldrb	r3, [r7, #7]
+ 80005cc:	2b07      	cmp	r3, #7
+ 80005ce:	f200 80c3 	bhi.w	8000758 <vDoCfgOutTypePins+0x1a4>
+ 80005d2:	a201      	add	r2, pc, #4	@ (adr r2, 80005d8 <vDoCfgOutTypePins+0x24>)
+ 80005d4:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 80005d8:	080005f9 	.word	0x080005f9
+ 80005dc:	08000625 	.word	0x08000625
+ 80005e0:	08000651 	.word	0x08000651
+ 80005e4:	0800067d 	.word	0x0800067d
+ 80005e8:	080006a9 	.word	0x080006a9
+ 80005ec:	080006d5 	.word	0x080006d5
+ 80005f0:	08000701 	.word	0x08000701
+ 80005f4:	0800072d 	.word	0x0800072d
+    {
+        case PORTA:
+            // Clear the existing state for the specified pin
+            AHB1_GPIOA->GPIOx_OTYPER.GPIOx_OTYPER_Reg &= ~(0x01 << position);
+ 80005f8:	4b5b      	ldr	r3, [pc, #364]	@ (8000768 <vDoCfgOutTypePins+0x1b4>)
+ 80005fa:	685b      	ldr	r3, [r3, #4]
+ 80005fc:	2101      	movs	r1, #1
+ 80005fe:	68fa      	ldr	r2, [r7, #12]
+ 8000600:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000604:	43d2      	mvns	r2, r2
+ 8000606:	4611      	mov	r1, r2
+ 8000608:	4a57      	ldr	r2, [pc, #348]	@ (8000768 <vDoCfgOutTypePins+0x1b4>)
+ 800060a:	400b      	ands	r3, r1
+ 800060c:	6053      	str	r3, [r2, #4]
+            // Set the new mode for the specified pin
+            AHB1_GPIOA->GPIOx_OTYPER.GPIOx_OTYPER_Reg |= (output_type << position);
+ 800060e:	4b56      	ldr	r3, [pc, #344]	@ (8000768 <vDoCfgOutTypePins+0x1b4>)
+ 8000610:	685b      	ldr	r3, [r3, #4]
+ 8000612:	7979      	ldrb	r1, [r7, #5]
+ 8000614:	68fa      	ldr	r2, [r7, #12]
+ 8000616:	fa01 f202 	lsl.w	r2, r1, r2
+ 800061a:	4611      	mov	r1, r2
+ 800061c:	4a52      	ldr	r2, [pc, #328]	@ (8000768 <vDoCfgOutTypePins+0x1b4>)
+ 800061e:	430b      	orrs	r3, r1
+ 8000620:	6053      	str	r3, [r2, #4]
+            break; // Exit the switch after each case
+ 8000622:	e09a      	b.n	800075a <vDoCfgOutTypePins+0x1a6>
+        case PORTB:
+            // Clear the existing state for the specified pin
+            AHB1_GPIOB->GPIOx_OTYPER.GPIOx_OTYPER_Reg &= ~(0x01 << position);
+ 8000624:	4b51      	ldr	r3, [pc, #324]	@ (800076c <vDoCfgOutTypePins+0x1b8>)
+ 8000626:	685b      	ldr	r3, [r3, #4]
+ 8000628:	2101      	movs	r1, #1
+ 800062a:	68fa      	ldr	r2, [r7, #12]
+ 800062c:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000630:	43d2      	mvns	r2, r2
+ 8000632:	4611      	mov	r1, r2
+ 8000634:	4a4d      	ldr	r2, [pc, #308]	@ (800076c <vDoCfgOutTypePins+0x1b8>)
+ 8000636:	400b      	ands	r3, r1
+ 8000638:	6053      	str	r3, [r2, #4]
+            // Set the new mode for the specified pin
+            AHB1_GPIOB->GPIOx_OTYPER.GPIOx_OTYPER_Reg |= (output_type << position);
+ 800063a:	4b4c      	ldr	r3, [pc, #304]	@ (800076c <vDoCfgOutTypePins+0x1b8>)
+ 800063c:	685b      	ldr	r3, [r3, #4]
+ 800063e:	7979      	ldrb	r1, [r7, #5]
+ 8000640:	68fa      	ldr	r2, [r7, #12]
+ 8000642:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000646:	4611      	mov	r1, r2
+ 8000648:	4a48      	ldr	r2, [pc, #288]	@ (800076c <vDoCfgOutTypePins+0x1b8>)
+ 800064a:	430b      	orrs	r3, r1
+ 800064c:	6053      	str	r3, [r2, #4]
+            break;
+ 800064e:	e084      	b.n	800075a <vDoCfgOutTypePins+0x1a6>
+        case PORTC:
+            // Clear the existing state for the specified pin
+            AHB1_GPIOC->GPIOx_OTYPER.GPIOx_OTYPER_Reg &= ~(0x01 << position);
+ 8000650:	4b47      	ldr	r3, [pc, #284]	@ (8000770 <vDoCfgOutTypePins+0x1bc>)
+ 8000652:	685b      	ldr	r3, [r3, #4]
+ 8000654:	2101      	movs	r1, #1
+ 8000656:	68fa      	ldr	r2, [r7, #12]
+ 8000658:	fa01 f202 	lsl.w	r2, r1, r2
+ 800065c:	43d2      	mvns	r2, r2
+ 800065e:	4611      	mov	r1, r2
+ 8000660:	4a43      	ldr	r2, [pc, #268]	@ (8000770 <vDoCfgOutTypePins+0x1bc>)
+ 8000662:	400b      	ands	r3, r1
+ 8000664:	6053      	str	r3, [r2, #4]
+            // Set the new mode for the specified pin
+            AHB1_GPIOC->GPIOx_OTYPER.GPIOx_OTYPER_Reg |= (output_type << position);
+ 8000666:	4b42      	ldr	r3, [pc, #264]	@ (8000770 <vDoCfgOutTypePins+0x1bc>)
+ 8000668:	685b      	ldr	r3, [r3, #4]
+ 800066a:	7979      	ldrb	r1, [r7, #5]
+ 800066c:	68fa      	ldr	r2, [r7, #12]
+ 800066e:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000672:	4611      	mov	r1, r2
+ 8000674:	4a3e      	ldr	r2, [pc, #248]	@ (8000770 <vDoCfgOutTypePins+0x1bc>)
+ 8000676:	430b      	orrs	r3, r1
+ 8000678:	6053      	str	r3, [r2, #4]
+            break;
+ 800067a:	e06e      	b.n	800075a <vDoCfgOutTypePins+0x1a6>
+        case PORTD:
+            // Clear the existing state for the specified pin
+            AHB1_GPIOD->GPIOx_OTYPER.GPIOx_OTYPER_Reg &= ~(0x01 << position);
+ 800067c:	4b3d      	ldr	r3, [pc, #244]	@ (8000774 <vDoCfgOutTypePins+0x1c0>)
+ 800067e:	685b      	ldr	r3, [r3, #4]
+ 8000680:	2101      	movs	r1, #1
+ 8000682:	68fa      	ldr	r2, [r7, #12]
+ 8000684:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000688:	43d2      	mvns	r2, r2
+ 800068a:	4611      	mov	r1, r2
+ 800068c:	4a39      	ldr	r2, [pc, #228]	@ (8000774 <vDoCfgOutTypePins+0x1c0>)
+ 800068e:	400b      	ands	r3, r1
+ 8000690:	6053      	str	r3, [r2, #4]
+            // Set the new mode for the specified pin
+            AHB1_GPIOD->GPIOx_OTYPER.GPIOx_OTYPER_Reg |= (output_type << position);
+ 8000692:	4b38      	ldr	r3, [pc, #224]	@ (8000774 <vDoCfgOutTypePins+0x1c0>)
+ 8000694:	685b      	ldr	r3, [r3, #4]
+ 8000696:	7979      	ldrb	r1, [r7, #5]
+ 8000698:	68fa      	ldr	r2, [r7, #12]
+ 800069a:	fa01 f202 	lsl.w	r2, r1, r2
+ 800069e:	4611      	mov	r1, r2
+ 80006a0:	4a34      	ldr	r2, [pc, #208]	@ (8000774 <vDoCfgOutTypePins+0x1c0>)
+ 80006a2:	430b      	orrs	r3, r1
+ 80006a4:	6053      	str	r3, [r2, #4]
+            break;
+ 80006a6:	e058      	b.n	800075a <vDoCfgOutTypePins+0x1a6>
+        case PORTE:
+            // Clear the existing state for the specified pin
+            AHB1_GPIOE->GPIOx_OTYPER.GPIOx_OTYPER_Reg &= ~(0x01 << position);
+ 80006a8:	4b33      	ldr	r3, [pc, #204]	@ (8000778 <vDoCfgOutTypePins+0x1c4>)
+ 80006aa:	685b      	ldr	r3, [r3, #4]
+ 80006ac:	2101      	movs	r1, #1
+ 80006ae:	68fa      	ldr	r2, [r7, #12]
+ 80006b0:	fa01 f202 	lsl.w	r2, r1, r2
+ 80006b4:	43d2      	mvns	r2, r2
+ 80006b6:	4611      	mov	r1, r2
+ 80006b8:	4a2f      	ldr	r2, [pc, #188]	@ (8000778 <vDoCfgOutTypePins+0x1c4>)
+ 80006ba:	400b      	ands	r3, r1
+ 80006bc:	6053      	str	r3, [r2, #4]
+            // Set the new mode for the specified pin
+            AHB1_GPIOE->GPIOx_OTYPER.GPIOx_OTYPER_Reg |= (output_type << position);
+ 80006be:	4b2e      	ldr	r3, [pc, #184]	@ (8000778 <vDoCfgOutTypePins+0x1c4>)
+ 80006c0:	685b      	ldr	r3, [r3, #4]
+ 80006c2:	7979      	ldrb	r1, [r7, #5]
+ 80006c4:	68fa      	ldr	r2, [r7, #12]
+ 80006c6:	fa01 f202 	lsl.w	r2, r1, r2
+ 80006ca:	4611      	mov	r1, r2
+ 80006cc:	4a2a      	ldr	r2, [pc, #168]	@ (8000778 <vDoCfgOutTypePins+0x1c4>)
+ 80006ce:	430b      	orrs	r3, r1
+ 80006d0:	6053      	str	r3, [r2, #4]
+            break;
+ 80006d2:	e042      	b.n	800075a <vDoCfgOutTypePins+0x1a6>
+        case PORTF:
+            // Clear the existing state for the specified pin
+            AHB1_GPIOF->GPIOx_OTYPER.GPIOx_OTYPER_Reg &= ~(0x01 << position);
+ 80006d4:	4b29      	ldr	r3, [pc, #164]	@ (800077c <vDoCfgOutTypePins+0x1c8>)
+ 80006d6:	685b      	ldr	r3, [r3, #4]
+ 80006d8:	2101      	movs	r1, #1
+ 80006da:	68fa      	ldr	r2, [r7, #12]
+ 80006dc:	fa01 f202 	lsl.w	r2, r1, r2
+ 80006e0:	43d2      	mvns	r2, r2
+ 80006e2:	4611      	mov	r1, r2
+ 80006e4:	4a25      	ldr	r2, [pc, #148]	@ (800077c <vDoCfgOutTypePins+0x1c8>)
+ 80006e6:	400b      	ands	r3, r1
+ 80006e8:	6053      	str	r3, [r2, #4]
+            // Set the new mode for the specified pin
+            AHB1_GPIOF->GPIOx_OTYPER.GPIOx_OTYPER_Reg |= (output_type << position);
+ 80006ea:	4b24      	ldr	r3, [pc, #144]	@ (800077c <vDoCfgOutTypePins+0x1c8>)
+ 80006ec:	685b      	ldr	r3, [r3, #4]
+ 80006ee:	7979      	ldrb	r1, [r7, #5]
+ 80006f0:	68fa      	ldr	r2, [r7, #12]
+ 80006f2:	fa01 f202 	lsl.w	r2, r1, r2
+ 80006f6:	4611      	mov	r1, r2
+ 80006f8:	4a20      	ldr	r2, [pc, #128]	@ (800077c <vDoCfgOutTypePins+0x1c8>)
+ 80006fa:	430b      	orrs	r3, r1
+ 80006fc:	6053      	str	r3, [r2, #4]
+            break;
+ 80006fe:	e02c      	b.n	800075a <vDoCfgOutTypePins+0x1a6>
+        case PORTG:
+            // Clear the existing state for the specified pin
+            AHB1_GPIOG->GPIOx_OTYPER.GPIOx_OTYPER_Reg &= ~(0x01 << position);
+ 8000700:	4b1f      	ldr	r3, [pc, #124]	@ (8000780 <vDoCfgOutTypePins+0x1cc>)
+ 8000702:	685b      	ldr	r3, [r3, #4]
+ 8000704:	2101      	movs	r1, #1
+ 8000706:	68fa      	ldr	r2, [r7, #12]
+ 8000708:	fa01 f202 	lsl.w	r2, r1, r2
+ 800070c:	43d2      	mvns	r2, r2
+ 800070e:	4611      	mov	r1, r2
+ 8000710:	4a1b      	ldr	r2, [pc, #108]	@ (8000780 <vDoCfgOutTypePins+0x1cc>)
+ 8000712:	400b      	ands	r3, r1
+ 8000714:	6053      	str	r3, [r2, #4]
+            // Set the new mode for the specified pin
+            AHB1_GPIOG->GPIOx_OTYPER.GPIOx_OTYPER_Reg |= (output_type << position);
+ 8000716:	4b1a      	ldr	r3, [pc, #104]	@ (8000780 <vDoCfgOutTypePins+0x1cc>)
+ 8000718:	685b      	ldr	r3, [r3, #4]
+ 800071a:	7979      	ldrb	r1, [r7, #5]
+ 800071c:	68fa      	ldr	r2, [r7, #12]
+ 800071e:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000722:	4611      	mov	r1, r2
+ 8000724:	4a16      	ldr	r2, [pc, #88]	@ (8000780 <vDoCfgOutTypePins+0x1cc>)
+ 8000726:	430b      	orrs	r3, r1
+ 8000728:	6053      	str	r3, [r2, #4]
+            break;
+ 800072a:	e016      	b.n	800075a <vDoCfgOutTypePins+0x1a6>
+        case PORTH:
+            // Clear the existing state for the specified pin
+            AHB1_GPIOH->GPIOx_OTYPER.GPIOx_OTYPER_Reg &= ~(0x01 << position);
+ 800072c:	4b15      	ldr	r3, [pc, #84]	@ (8000784 <vDoCfgOutTypePins+0x1d0>)
+ 800072e:	685b      	ldr	r3, [r3, #4]
+ 8000730:	2101      	movs	r1, #1
+ 8000732:	68fa      	ldr	r2, [r7, #12]
+ 8000734:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000738:	43d2      	mvns	r2, r2
+ 800073a:	4611      	mov	r1, r2
+ 800073c:	4a11      	ldr	r2, [pc, #68]	@ (8000784 <vDoCfgOutTypePins+0x1d0>)
+ 800073e:	400b      	ands	r3, r1
+ 8000740:	6053      	str	r3, [r2, #4]
+            // Set the new mode for the specified pin
+            AHB1_GPIOH->GPIOx_OTYPER.GPIOx_OTYPER_Reg |= (output_type << position);
+ 8000742:	4b10      	ldr	r3, [pc, #64]	@ (8000784 <vDoCfgOutTypePins+0x1d0>)
+ 8000744:	685b      	ldr	r3, [r3, #4]
+ 8000746:	7979      	ldrb	r1, [r7, #5]
+ 8000748:	68fa      	ldr	r2, [r7, #12]
+ 800074a:	fa01 f202 	lsl.w	r2, r1, r2
+ 800074e:	4611      	mov	r1, r2
+ 8000750:	4a0c      	ldr	r2, [pc, #48]	@ (8000784 <vDoCfgOutTypePins+0x1d0>)
+ 8000752:	430b      	orrs	r3, r1
+ 8000754:	6053      	str	r3, [r2, #4]
+            break;
+ 8000756:	e000      	b.n	800075a <vDoCfgOutTypePins+0x1a6>
+        default:
+            // Invalid port, do nothing or handle the error accordingly
+            break;
+ 8000758:	bf00      	nop
+    }
+}
+ 800075a:	bf00      	nop
+ 800075c:	3714      	adds	r7, #20
+ 800075e:	46bd      	mov	sp, r7
+ 8000760:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000764:	4770      	bx	lr
+ 8000766:	bf00      	nop
+ 8000768:	40020000 	.word	0x40020000
+ 800076c:	40020400 	.word	0x40020400
+ 8000770:	40020800 	.word	0x40020800
+ 8000774:	40020c00 	.word	0x40020c00
+ 8000778:	40021000 	.word	0x40021000
+ 800077c:	40021400 	.word	0x40021400
+ 8000780:	40021800 	.word	0x40021800
+ 8000784:	40021c00 	.word	0x40021c00
+
+08000788 <vDoCfgInputOutputTypePins>:
+ * 	eNoPullUpOrPullDown
+ *	ePullUp
+ *	ePullDown
+ */
+void vDoCfgInputOutputTypePins(gpio_ports Port, gpio_pins Pin, eModesForGPIOx_PUPDR io_type)
+{
+ 8000788:	b480      	push	{r7}
+ 800078a:	b085      	sub	sp, #20
+ 800078c:	af00      	add	r7, sp, #0
+ 800078e:	4603      	mov	r3, r0
+ 8000790:	71fb      	strb	r3, [r7, #7]
+ 8000792:	460b      	mov	r3, r1
+ 8000794:	71bb      	strb	r3, [r7, #6]
+ 8000796:	4613      	mov	r3, r2
+ 8000798:	717b      	strb	r3, [r7, #5]
+    // Calculate the position of the pin in the MODER register
+	uint32 position = Pin * 2;
+ 800079a:	79bb      	ldrb	r3, [r7, #6]
+ 800079c:	005b      	lsls	r3, r3, #1
+ 800079e:	60fb      	str	r3, [r7, #12]
+
+    switch (Port)
+ 80007a0:	79fb      	ldrb	r3, [r7, #7]
+ 80007a2:	2b07      	cmp	r3, #7
+ 80007a4:	f200 80c4 	bhi.w	8000930 <vDoCfgInputOutputTypePins+0x1a8>
+ 80007a8:	a201      	add	r2, pc, #4	@ (adr r2, 80007b0 <vDoCfgInputOutputTypePins+0x28>)
+ 80007aa:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 80007ae:	bf00      	nop
+ 80007b0:	080007d1 	.word	0x080007d1
+ 80007b4:	080007fd 	.word	0x080007fd
+ 80007b8:	08000829 	.word	0x08000829
+ 80007bc:	08000855 	.word	0x08000855
+ 80007c0:	08000881 	.word	0x08000881
+ 80007c4:	080008ad 	.word	0x080008ad
+ 80007c8:	080008d9 	.word	0x080008d9
+ 80007cc:	08000905 	.word	0x08000905
+    {
+        case PORTA:
+            // Clear the existing value for the specified pin
+            AHB1_GPIOA->GPIOx_PUPDR.GPIOx_PUPDR_Reg &= ~(0x03 << position);
+ 80007d0:	4b5b      	ldr	r3, [pc, #364]	@ (8000940 <vDoCfgInputOutputTypePins+0x1b8>)
+ 80007d2:	691b      	ldr	r3, [r3, #16]
+ 80007d4:	2103      	movs	r1, #3
+ 80007d6:	68fa      	ldr	r2, [r7, #12]
+ 80007d8:	fa01 f202 	lsl.w	r2, r1, r2
+ 80007dc:	43d2      	mvns	r2, r2
+ 80007de:	4611      	mov	r1, r2
+ 80007e0:	4a57      	ldr	r2, [pc, #348]	@ (8000940 <vDoCfgInputOutputTypePins+0x1b8>)
+ 80007e2:	400b      	ands	r3, r1
+ 80007e4:	6113      	str	r3, [r2, #16]
+            // Set the new value of config pullup/pulldown for the specified pin
+            AHB1_GPIOA->GPIOx_PUPDR.GPIOx_PUPDR_Reg |= (io_type << position);
+ 80007e6:	4b56      	ldr	r3, [pc, #344]	@ (8000940 <vDoCfgInputOutputTypePins+0x1b8>)
+ 80007e8:	691b      	ldr	r3, [r3, #16]
+ 80007ea:	7979      	ldrb	r1, [r7, #5]
+ 80007ec:	68fa      	ldr	r2, [r7, #12]
+ 80007ee:	fa01 f202 	lsl.w	r2, r1, r2
+ 80007f2:	4611      	mov	r1, r2
+ 80007f4:	4a52      	ldr	r2, [pc, #328]	@ (8000940 <vDoCfgInputOutputTypePins+0x1b8>)
+ 80007f6:	430b      	orrs	r3, r1
+ 80007f8:	6113      	str	r3, [r2, #16]
+            break; // Important: Exit the switch after each case
+ 80007fa:	e09a      	b.n	8000932 <vDoCfgInputOutputTypePins+0x1aa>
+        case PORTB:
+            // Clear the existing value for the specified pin
+            AHB1_GPIOB->GPIOx_PUPDR.GPIOx_PUPDR_Reg &= ~(0x03 << position);
+ 80007fc:	4b51      	ldr	r3, [pc, #324]	@ (8000944 <vDoCfgInputOutputTypePins+0x1bc>)
+ 80007fe:	691b      	ldr	r3, [r3, #16]
+ 8000800:	2103      	movs	r1, #3
+ 8000802:	68fa      	ldr	r2, [r7, #12]
+ 8000804:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000808:	43d2      	mvns	r2, r2
+ 800080a:	4611      	mov	r1, r2
+ 800080c:	4a4d      	ldr	r2, [pc, #308]	@ (8000944 <vDoCfgInputOutputTypePins+0x1bc>)
+ 800080e:	400b      	ands	r3, r1
+ 8000810:	6113      	str	r3, [r2, #16]
+            // Set the new value of config pullup/pulldown for the specified pin
+            AHB1_GPIOB->GPIOx_PUPDR.GPIOx_PUPDR_Reg |= (io_type << position);
+ 8000812:	4b4c      	ldr	r3, [pc, #304]	@ (8000944 <vDoCfgInputOutputTypePins+0x1bc>)
+ 8000814:	691b      	ldr	r3, [r3, #16]
+ 8000816:	7979      	ldrb	r1, [r7, #5]
+ 8000818:	68fa      	ldr	r2, [r7, #12]
+ 800081a:	fa01 f202 	lsl.w	r2, r1, r2
+ 800081e:	4611      	mov	r1, r2
+ 8000820:	4a48      	ldr	r2, [pc, #288]	@ (8000944 <vDoCfgInputOutputTypePins+0x1bc>)
+ 8000822:	430b      	orrs	r3, r1
+ 8000824:	6113      	str	r3, [r2, #16]
+            break;
+ 8000826:	e084      	b.n	8000932 <vDoCfgInputOutputTypePins+0x1aa>
+        case PORTC:
+            // Clear the existing value for the specified pin
+            AHB1_GPIOC->GPIOx_PUPDR.GPIOx_PUPDR_Reg &= ~(0x03 << position);
+ 8000828:	4b47      	ldr	r3, [pc, #284]	@ (8000948 <vDoCfgInputOutputTypePins+0x1c0>)
+ 800082a:	691b      	ldr	r3, [r3, #16]
+ 800082c:	2103      	movs	r1, #3
+ 800082e:	68fa      	ldr	r2, [r7, #12]
+ 8000830:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000834:	43d2      	mvns	r2, r2
+ 8000836:	4611      	mov	r1, r2
+ 8000838:	4a43      	ldr	r2, [pc, #268]	@ (8000948 <vDoCfgInputOutputTypePins+0x1c0>)
+ 800083a:	400b      	ands	r3, r1
+ 800083c:	6113      	str	r3, [r2, #16]
+            // Set the new value of config pullup/pulldown for the specified pin
+            AHB1_GPIOC->GPIOx_PUPDR.GPIOx_PUPDR_Reg |= (io_type << position);
+ 800083e:	4b42      	ldr	r3, [pc, #264]	@ (8000948 <vDoCfgInputOutputTypePins+0x1c0>)
+ 8000840:	691b      	ldr	r3, [r3, #16]
+ 8000842:	7979      	ldrb	r1, [r7, #5]
+ 8000844:	68fa      	ldr	r2, [r7, #12]
+ 8000846:	fa01 f202 	lsl.w	r2, r1, r2
+ 800084a:	4611      	mov	r1, r2
+ 800084c:	4a3e      	ldr	r2, [pc, #248]	@ (8000948 <vDoCfgInputOutputTypePins+0x1c0>)
+ 800084e:	430b      	orrs	r3, r1
+ 8000850:	6113      	str	r3, [r2, #16]
+            break;
+ 8000852:	e06e      	b.n	8000932 <vDoCfgInputOutputTypePins+0x1aa>
+        case PORTD:
+            // Clear the existing value for the specified pin
+            AHB1_GPIOD->GPIOx_PUPDR.GPIOx_PUPDR_Reg &= ~(0x03 << position);
+ 8000854:	4b3d      	ldr	r3, [pc, #244]	@ (800094c <vDoCfgInputOutputTypePins+0x1c4>)
+ 8000856:	691b      	ldr	r3, [r3, #16]
+ 8000858:	2103      	movs	r1, #3
+ 800085a:	68fa      	ldr	r2, [r7, #12]
+ 800085c:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000860:	43d2      	mvns	r2, r2
+ 8000862:	4611      	mov	r1, r2
+ 8000864:	4a39      	ldr	r2, [pc, #228]	@ (800094c <vDoCfgInputOutputTypePins+0x1c4>)
+ 8000866:	400b      	ands	r3, r1
+ 8000868:	6113      	str	r3, [r2, #16]
+            // Set the new value of config pullup/pulldown for the specified pin
+            AHB1_GPIOD->GPIOx_PUPDR.GPIOx_PUPDR_Reg |= (io_type << position);
+ 800086a:	4b38      	ldr	r3, [pc, #224]	@ (800094c <vDoCfgInputOutputTypePins+0x1c4>)
+ 800086c:	691b      	ldr	r3, [r3, #16]
+ 800086e:	7979      	ldrb	r1, [r7, #5]
+ 8000870:	68fa      	ldr	r2, [r7, #12]
+ 8000872:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000876:	4611      	mov	r1, r2
+ 8000878:	4a34      	ldr	r2, [pc, #208]	@ (800094c <vDoCfgInputOutputTypePins+0x1c4>)
+ 800087a:	430b      	orrs	r3, r1
+ 800087c:	6113      	str	r3, [r2, #16]
+            break;
+ 800087e:	e058      	b.n	8000932 <vDoCfgInputOutputTypePins+0x1aa>
+        case PORTE:
+            // Clear the existing value for the specified pin
+            AHB1_GPIOE->GPIOx_PUPDR.GPIOx_PUPDR_Reg &= ~(0x03 << position);
+ 8000880:	4b33      	ldr	r3, [pc, #204]	@ (8000950 <vDoCfgInputOutputTypePins+0x1c8>)
+ 8000882:	691b      	ldr	r3, [r3, #16]
+ 8000884:	2103      	movs	r1, #3
+ 8000886:	68fa      	ldr	r2, [r7, #12]
+ 8000888:	fa01 f202 	lsl.w	r2, r1, r2
+ 800088c:	43d2      	mvns	r2, r2
+ 800088e:	4611      	mov	r1, r2
+ 8000890:	4a2f      	ldr	r2, [pc, #188]	@ (8000950 <vDoCfgInputOutputTypePins+0x1c8>)
+ 8000892:	400b      	ands	r3, r1
+ 8000894:	6113      	str	r3, [r2, #16]
+            // Set the new value of config pullup/pulldown for the specified pin
+            AHB1_GPIOE->GPIOx_PUPDR.GPIOx_PUPDR_Reg |= (io_type << position);
+ 8000896:	4b2e      	ldr	r3, [pc, #184]	@ (8000950 <vDoCfgInputOutputTypePins+0x1c8>)
+ 8000898:	691b      	ldr	r3, [r3, #16]
+ 800089a:	7979      	ldrb	r1, [r7, #5]
+ 800089c:	68fa      	ldr	r2, [r7, #12]
+ 800089e:	fa01 f202 	lsl.w	r2, r1, r2
+ 80008a2:	4611      	mov	r1, r2
+ 80008a4:	4a2a      	ldr	r2, [pc, #168]	@ (8000950 <vDoCfgInputOutputTypePins+0x1c8>)
+ 80008a6:	430b      	orrs	r3, r1
+ 80008a8:	6113      	str	r3, [r2, #16]
+            break;
+ 80008aa:	e042      	b.n	8000932 <vDoCfgInputOutputTypePins+0x1aa>
+        case PORTF:
+            // Clear the existing value for the specified pin
+            AHB1_GPIOF->GPIOx_PUPDR.GPIOx_PUPDR_Reg &= ~(0x03 << position);
+ 80008ac:	4b29      	ldr	r3, [pc, #164]	@ (8000954 <vDoCfgInputOutputTypePins+0x1cc>)
+ 80008ae:	691b      	ldr	r3, [r3, #16]
+ 80008b0:	2103      	movs	r1, #3
+ 80008b2:	68fa      	ldr	r2, [r7, #12]
+ 80008b4:	fa01 f202 	lsl.w	r2, r1, r2
+ 80008b8:	43d2      	mvns	r2, r2
+ 80008ba:	4611      	mov	r1, r2
+ 80008bc:	4a25      	ldr	r2, [pc, #148]	@ (8000954 <vDoCfgInputOutputTypePins+0x1cc>)
+ 80008be:	400b      	ands	r3, r1
+ 80008c0:	6113      	str	r3, [r2, #16]
+            // Set the new value of config pullup/pulldown for the specified pin
+            AHB1_GPIOF->GPIOx_PUPDR.GPIOx_PUPDR_Reg |= (io_type << position);
+ 80008c2:	4b24      	ldr	r3, [pc, #144]	@ (8000954 <vDoCfgInputOutputTypePins+0x1cc>)
+ 80008c4:	691b      	ldr	r3, [r3, #16]
+ 80008c6:	7979      	ldrb	r1, [r7, #5]
+ 80008c8:	68fa      	ldr	r2, [r7, #12]
+ 80008ca:	fa01 f202 	lsl.w	r2, r1, r2
+ 80008ce:	4611      	mov	r1, r2
+ 80008d0:	4a20      	ldr	r2, [pc, #128]	@ (8000954 <vDoCfgInputOutputTypePins+0x1cc>)
+ 80008d2:	430b      	orrs	r3, r1
+ 80008d4:	6113      	str	r3, [r2, #16]
+            break;
+ 80008d6:	e02c      	b.n	8000932 <vDoCfgInputOutputTypePins+0x1aa>
+        case PORTG:
+            // Clear the existing value for the specified pin
+            AHB1_GPIOG->GPIOx_PUPDR.GPIOx_PUPDR_Reg &= ~(0x03 << position);
+ 80008d8:	4b1f      	ldr	r3, [pc, #124]	@ (8000958 <vDoCfgInputOutputTypePins+0x1d0>)
+ 80008da:	691b      	ldr	r3, [r3, #16]
+ 80008dc:	2103      	movs	r1, #3
+ 80008de:	68fa      	ldr	r2, [r7, #12]
+ 80008e0:	fa01 f202 	lsl.w	r2, r1, r2
+ 80008e4:	43d2      	mvns	r2, r2
+ 80008e6:	4611      	mov	r1, r2
+ 80008e8:	4a1b      	ldr	r2, [pc, #108]	@ (8000958 <vDoCfgInputOutputTypePins+0x1d0>)
+ 80008ea:	400b      	ands	r3, r1
+ 80008ec:	6113      	str	r3, [r2, #16]
+            // Set the new value of config pullup/pulldown for the specified pin
+            AHB1_GPIOG->GPIOx_PUPDR.GPIOx_PUPDR_Reg |= (io_type << position);
+ 80008ee:	4b1a      	ldr	r3, [pc, #104]	@ (8000958 <vDoCfgInputOutputTypePins+0x1d0>)
+ 80008f0:	691b      	ldr	r3, [r3, #16]
+ 80008f2:	7979      	ldrb	r1, [r7, #5]
+ 80008f4:	68fa      	ldr	r2, [r7, #12]
+ 80008f6:	fa01 f202 	lsl.w	r2, r1, r2
+ 80008fa:	4611      	mov	r1, r2
+ 80008fc:	4a16      	ldr	r2, [pc, #88]	@ (8000958 <vDoCfgInputOutputTypePins+0x1d0>)
+ 80008fe:	430b      	orrs	r3, r1
+ 8000900:	6113      	str	r3, [r2, #16]
+            break;
+ 8000902:	e016      	b.n	8000932 <vDoCfgInputOutputTypePins+0x1aa>
+        case PORTH:
+            // Clear the existing value for the specified pin
+            AHB1_GPIOH->GPIOx_PUPDR.GPIOx_PUPDR_Reg &= ~(0x03 << position);
+ 8000904:	4b15      	ldr	r3, [pc, #84]	@ (800095c <vDoCfgInputOutputTypePins+0x1d4>)
+ 8000906:	691b      	ldr	r3, [r3, #16]
+ 8000908:	2103      	movs	r1, #3
+ 800090a:	68fa      	ldr	r2, [r7, #12]
+ 800090c:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000910:	43d2      	mvns	r2, r2
+ 8000912:	4611      	mov	r1, r2
+ 8000914:	4a11      	ldr	r2, [pc, #68]	@ (800095c <vDoCfgInputOutputTypePins+0x1d4>)
+ 8000916:	400b      	ands	r3, r1
+ 8000918:	6113      	str	r3, [r2, #16]
+            // Set the new value of config pullup/pulldown for the specified pin
+            AHB1_GPIOH->GPIOx_PUPDR.GPIOx_PUPDR_Reg |= (io_type << position);
+ 800091a:	4b10      	ldr	r3, [pc, #64]	@ (800095c <vDoCfgInputOutputTypePins+0x1d4>)
+ 800091c:	691b      	ldr	r3, [r3, #16]
+ 800091e:	7979      	ldrb	r1, [r7, #5]
+ 8000920:	68fa      	ldr	r2, [r7, #12]
+ 8000922:	fa01 f202 	lsl.w	r2, r1, r2
+ 8000926:	4611      	mov	r1, r2
+ 8000928:	4a0c      	ldr	r2, [pc, #48]	@ (800095c <vDoCfgInputOutputTypePins+0x1d4>)
+ 800092a:	430b      	orrs	r3, r1
+ 800092c:	6113      	str	r3, [r2, #16]
+            break;
+ 800092e:	e000      	b.n	8000932 <vDoCfgInputOutputTypePins+0x1aa>
+        default:
+            // Invalid port, do nothing or handle the error accordingly
+            break;
+ 8000930:	bf00      	nop
+    }
+}
+ 8000932:	bf00      	nop
+ 8000934:	3714      	adds	r7, #20
+ 8000936:	46bd      	mov	sp, r7
+ 8000938:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 800093c:	4770      	bx	lr
+ 800093e:	bf00      	nop
+ 8000940:	40020000 	.word	0x40020000
+ 8000944:	40020400 	.word	0x40020400
+ 8000948:	40020800 	.word	0x40020800
+ 800094c:	40020c00 	.word	0x40020c00
+ 8000950:	40021000 	.word	0x40021000
+ 8000954:	40021400 	.word	0x40021400
+ 8000958:	40021800 	.word	0x40021800
+ 800095c:	40021c00 	.word	0x40021c00
+
+08000960 <vDoSetStateOutputPin>:
+În cazul STM32, unele registre și operații oferă această caracteristică, permițând dezvoltatorilor
+să creeze aplicații sigure și robuste fără a fi nevoie să se îngrijoreze de condițiile de cursă în
+timpul manipulării datelor și a stărilor de pin.
+ */
+void vDoSetStateOutputPin(gpio_ports Port, gpio_pins Pin, bool state_of_pin)
+{
+ 8000960:	b480      	push	{r7}
+ 8000962:	b085      	sub	sp, #20
+ 8000964:	af00      	add	r7, sp, #0
+ 8000966:	4603      	mov	r3, r0
+ 8000968:	71fb      	strb	r3, [r7, #7]
+ 800096a:	460b      	mov	r3, r1
+ 800096c:	71bb      	strb	r3, [r7, #6]
+ 800096e:	4613      	mov	r3, r2
+ 8000970:	717b      	strb	r3, [r7, #5]
+	uint32 position = Pin;
+ 8000972:	79bb      	ldrb	r3, [r7, #6]
+ 8000974:	60bb      	str	r3, [r7, #8]
+
+    volatile uint32 *reg;
+    switch (Port)
+ 8000976:	79fb      	ldrb	r3, [r7, #7]
+ 8000978:	2b07      	cmp	r3, #7
+ 800097a:	d83f      	bhi.n	80009fc <vDoSetStateOutputPin+0x9c>
+ 800097c:	a201      	add	r2, pc, #4	@ (adr r2, 8000984 <vDoSetStateOutputPin+0x24>)
+ 800097e:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 8000982:	bf00      	nop
+ 8000984:	080009a5 	.word	0x080009a5
+ 8000988:	080009ab 	.word	0x080009ab
+ 800098c:	080009b1 	.word	0x080009b1
+ 8000990:	080009b7 	.word	0x080009b7
+ 8000994:	080009bd 	.word	0x080009bd
+ 8000998:	080009c3 	.word	0x080009c3
+ 800099c:	080009c9 	.word	0x080009c9
+ 80009a0:	080009cf 	.word	0x080009cf
+    {
+        case PORTA:
+            reg = &(AHB1_GPIOA->GPIOx_BSRR.u32GPIOx_BSRR_Reg);
+ 80009a4:	4b18      	ldr	r3, [pc, #96]	@ (8000a08 <vDoSetStateOutputPin+0xa8>)
+ 80009a6:	60fb      	str	r3, [r7, #12]
+            break;
+ 80009a8:	e014      	b.n	80009d4 <vDoSetStateOutputPin+0x74>
+        case PORTB:
+            reg = &(AHB1_GPIOB->GPIOx_BSRR.u32GPIOx_BSRR_Reg);
+ 80009aa:	4b18      	ldr	r3, [pc, #96]	@ (8000a0c <vDoSetStateOutputPin+0xac>)
+ 80009ac:	60fb      	str	r3, [r7, #12]
+            break;
+ 80009ae:	e011      	b.n	80009d4 <vDoSetStateOutputPin+0x74>
+        case PORTC:
+            reg = &(AHB1_GPIOC->GPIOx_BSRR.u32GPIOx_BSRR_Reg);
+ 80009b0:	4b17      	ldr	r3, [pc, #92]	@ (8000a10 <vDoSetStateOutputPin+0xb0>)
+ 80009b2:	60fb      	str	r3, [r7, #12]
+            break;
+ 80009b4:	e00e      	b.n	80009d4 <vDoSetStateOutputPin+0x74>
+        case PORTD:
+            reg = &(AHB1_GPIOD->GPIOx_BSRR.u32GPIOx_BSRR_Reg);
+ 80009b6:	4b17      	ldr	r3, [pc, #92]	@ (8000a14 <vDoSetStateOutputPin+0xb4>)
+ 80009b8:	60fb      	str	r3, [r7, #12]
+            break;
+ 80009ba:	e00b      	b.n	80009d4 <vDoSetStateOutputPin+0x74>
+        case PORTE:
+            reg = &(AHB1_GPIOE->GPIOx_BSRR.u32GPIOx_BSRR_Reg);
+ 80009bc:	4b16      	ldr	r3, [pc, #88]	@ (8000a18 <vDoSetStateOutputPin+0xb8>)
+ 80009be:	60fb      	str	r3, [r7, #12]
+            break;
+ 80009c0:	e008      	b.n	80009d4 <vDoSetStateOutputPin+0x74>
+        case PORTF:
+            reg = &(AHB1_GPIOF->GPIOx_BSRR.u32GPIOx_BSRR_Reg);
+ 80009c2:	4b16      	ldr	r3, [pc, #88]	@ (8000a1c <vDoSetStateOutputPin+0xbc>)
+ 80009c4:	60fb      	str	r3, [r7, #12]
+            break;
+ 80009c6:	e005      	b.n	80009d4 <vDoSetStateOutputPin+0x74>
+        case PORTG:
+            reg = &(AHB1_GPIOG->GPIOx_BSRR.u32GPIOx_BSRR_Reg);
+ 80009c8:	4b15      	ldr	r3, [pc, #84]	@ (8000a20 <vDoSetStateOutputPin+0xc0>)
+ 80009ca:	60fb      	str	r3, [r7, #12]
+            break;
+ 80009cc:	e002      	b.n	80009d4 <vDoSetStateOutputPin+0x74>
+        case PORTH:
+            reg = &(AHB1_GPIOH->GPIOx_BSRR.u32GPIOx_BSRR_Reg);
+ 80009ce:	4b15      	ldr	r3, [pc, #84]	@ (8000a24 <vDoSetStateOutputPin+0xc4>)
+ 80009d0:	60fb      	str	r3, [r7, #12]
+            break;
+ 80009d2:	bf00      	nop
+        default:
+            return; // Invalid port
+    }
+
+    if (state_of_pin == HIGH)
+ 80009d4:	797b      	ldrb	r3, [r7, #5]
+ 80009d6:	2b01      	cmp	r3, #1
+ 80009d8:	d107      	bne.n	80009ea <vDoSetStateOutputPin+0x8a>
+    {
+        *reg = (1 << position); // Set pin
+ 80009da:	2201      	movs	r2, #1
+ 80009dc:	68bb      	ldr	r3, [r7, #8]
+ 80009de:	fa02 f303 	lsl.w	r3, r2, r3
+ 80009e2:	461a      	mov	r2, r3
+ 80009e4:	68fb      	ldr	r3, [r7, #12]
+ 80009e6:	601a      	str	r2, [r3, #0]
+ 80009e8:	e009      	b.n	80009fe <vDoSetStateOutputPin+0x9e>
+    }
+    else
+    {
+        *reg = (1 << (position + 16)); // Reset pin
+ 80009ea:	68bb      	ldr	r3, [r7, #8]
+ 80009ec:	3310      	adds	r3, #16
+ 80009ee:	2201      	movs	r2, #1
+ 80009f0:	fa02 f303 	lsl.w	r3, r2, r3
+ 80009f4:	461a      	mov	r2, r3
+ 80009f6:	68fb      	ldr	r3, [r7, #12]
+ 80009f8:	601a      	str	r2, [r3, #0]
+ 80009fa:	e000      	b.n	80009fe <vDoSetStateOutputPin+0x9e>
+            return; // Invalid port
+ 80009fc:	bf00      	nop
+    }
+}
+ 80009fe:	3714      	adds	r7, #20
+ 8000a00:	46bd      	mov	sp, r7
+ 8000a02:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000a06:	4770      	bx	lr
+ 8000a08:	4002001c 	.word	0x4002001c
+ 8000a0c:	4002041c 	.word	0x4002041c
+ 8000a10:	4002081c 	.word	0x4002081c
+ 8000a14:	40020c1c 	.word	0x40020c1c
+ 8000a18:	4002101c 	.word	0x4002101c
+ 8000a1c:	4002141c 	.word	0x4002141c
+ 8000a20:	4002181c 	.word	0x4002181c
+ 8000a24:	40021c1c 	.word	0x40021c1c
+
+08000a28 <vDoSetStateUserLed>:
+#include "memmap_gpio.h"
+#include "gpio_drv.h"
+#include "peripheral_pins.h"
+
+void vDoSetStateUserLed(bool pin_state)
+{
+ 8000a28:	b580      	push	{r7, lr}
+ 8000a2a:	b082      	sub	sp, #8
+ 8000a2c:	af00      	add	r7, sp, #0
+ 8000a2e:	4603      	mov	r3, r0
+ 8000a30:	71fb      	strb	r3, [r7, #7]
+	/* To be safe it's only boolean */
+	pin_state = pin_state != 0;
+ 8000a32:	79fb      	ldrb	r3, [r7, #7]
+ 8000a34:	2b00      	cmp	r3, #0
+ 8000a36:	bf14      	ite	ne
+ 8000a38:	2301      	movne	r3, #1
+ 8000a3a:	2300      	moveq	r3, #0
+ 8000a3c:	b2db      	uxtb	r3, r3
+ 8000a3e:	71fb      	strb	r3, [r7, #7]
+
+	vDoConfigurePin(PORTA,5, eGeneralPurposeOutput);
+ 8000a40:	2201      	movs	r2, #1
+ 8000a42:	2105      	movs	r1, #5
+ 8000a44:	2000      	movs	r0, #0
+ 8000a46:	f7ff fbdd 	bl	8000204 <vDoConfigurePin>
+	vDoSelectPinSpeed(PORTA,5, eOSpeedHighSpeed);
+ 8000a4a:	2203      	movs	r2, #3
+ 8000a4c:	2105      	movs	r1, #5
+ 8000a4e:	2000      	movs	r0, #0
+ 8000a50:	f7ff fcc4 	bl	80003dc <vDoSelectPinSpeed>
+	vDoCfgOutTypePins(PORTA,5, eOutputPushPull);
+ 8000a54:	2200      	movs	r2, #0
+ 8000a56:	2105      	movs	r1, #5
+ 8000a58:	2000      	movs	r0, #0
+ 8000a5a:	f7ff fdab 	bl	80005b4 <vDoCfgOutTypePins>
+	vDoCfgInputOutputTypePins(PORTA,5,eNoPullUpOrPullDown);
+ 8000a5e:	2200      	movs	r2, #0
+ 8000a60:	2105      	movs	r1, #5
+ 8000a62:	2000      	movs	r0, #0
+ 8000a64:	f7ff fe90 	bl	8000788 <vDoCfgInputOutputTypePins>
+	vDoSetStateOutputPin(PORTA,5,pin_state);
+ 8000a68:	79fb      	ldrb	r3, [r7, #7]
+ 8000a6a:	461a      	mov	r2, r3
+ 8000a6c:	2105      	movs	r1, #5
+ 8000a6e:	2000      	movs	r0, #0
+ 8000a70:	f7ff ff76 	bl	8000960 <vDoSetStateOutputPin>
+
+}
+ 8000a74:	bf00      	nop
+ 8000a76:	3708      	adds	r7, #8
+ 8000a78:	46bd      	mov	sp, r7
+ 8000a7a:	bd80      	pop	{r7, pc}
+
+08000a7c <main>:
+
+#include "../Inc/gpio/peripheral_pins.h"
 
 int main()
 {
- 8000204:	b480      	push	{r7}
- 8000206:	af00      	add	r7, sp, #0
- 8000208:	2300      	movs	r3, #0
-
+ 8000a7c:	b580      	push	{r7, lr}
+ 8000a7e:	af00      	add	r7, sp, #0
+	vDoSetStateUserLed(HIGH);
+ 8000a80:	2001      	movs	r0, #1
+ 8000a82:	f7ff ffd1 	bl	8000a28 <vDoSetStateUserLed>
+ 8000a86:	2300      	movs	r3, #0
 }
- 800020a:	4618      	mov	r0, r3
- 800020c:	46bd      	mov	sp, r7
- 800020e:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8000212:	4770      	bx	lr
+ 8000a88:	4618      	mov	r0, r3
+ 8000a8a:	bd80      	pop	{r7, pc}
 
-08000214 <Reset_Handler>:
+08000a8c <Reset_Handler>:
 
   .section .text.Reset_Handler
   .weak Reset_Handler
   .type Reset_Handler, %function
 Reset_Handler:
   ldr   r0, =_estack
- 8000214:	480d      	ldr	r0, [pc, #52]	@ (800024c <LoopForever+0x2>)
+ 8000a8c:	480d      	ldr	r0, [pc, #52]	@ (8000ac4 <LoopForever+0x2>)
   mov   sp, r0          /* set stack pointer */
- 8000216:	4685      	mov	sp, r0
+ 8000a8e:	4685      	mov	sp, r0
 /* Call the clock system initialization function.*/
   bl  SystemInit
- 8000218:	f3af 8000 	nop.w
+ 8000a90:	f3af 8000 	nop.w
 
 /* Copy the data segment initializers from flash to SRAM */
   ldr r0, =_sdata
- 800021c:	480c      	ldr	r0, [pc, #48]	@ (8000250 <LoopForever+0x6>)
+ 8000a94:	480c      	ldr	r0, [pc, #48]	@ (8000ac8 <LoopForever+0x6>)
   ldr r1, =_edata
- 800021e:	490d      	ldr	r1, [pc, #52]	@ (8000254 <LoopForever+0xa>)
+ 8000a96:	490d      	ldr	r1, [pc, #52]	@ (8000acc <LoopForever+0xa>)
   ldr r2, =_sidata
- 8000220:	4a0d      	ldr	r2, [pc, #52]	@ (8000258 <LoopForever+0xe>)
+ 8000a98:	4a0d      	ldr	r2, [pc, #52]	@ (8000ad0 <LoopForever+0xe>)
   movs r3, #0
- 8000222:	2300      	movs	r3, #0
+ 8000a9a:	2300      	movs	r3, #0
   b LoopCopyDataInit
- 8000224:	e002      	b.n	800022c <LoopCopyDataInit>
+ 8000a9c:	e002      	b.n	8000aa4 <LoopCopyDataInit>
 
-08000226 <CopyDataInit>:
+08000a9e <CopyDataInit>:
 
 CopyDataInit:
   ldr r4, [r2, r3]
- 8000226:	58d4      	ldr	r4, [r2, r3]
+ 8000a9e:	58d4      	ldr	r4, [r2, r3]
   str r4, [r0, r3]
- 8000228:	50c4      	str	r4, [r0, r3]
+ 8000aa0:	50c4      	str	r4, [r0, r3]
   adds r3, r3, #4
- 800022a:	3304      	adds	r3, #4
+ 8000aa2:	3304      	adds	r3, #4
 
-0800022c <LoopCopyDataInit>:
+08000aa4 <LoopCopyDataInit>:
 
 LoopCopyDataInit:
   adds r4, r0, r3
- 800022c:	18c4      	adds	r4, r0, r3
+ 8000aa4:	18c4      	adds	r4, r0, r3
   cmp r4, r1
- 800022e:	428c      	cmp	r4, r1
+ 8000aa6:	428c      	cmp	r4, r1
   bcc CopyDataInit
- 8000230:	d3f9      	bcc.n	8000226 <CopyDataInit>
+ 8000aa8:	d3f9      	bcc.n	8000a9e <CopyDataInit>
 
 /* Zero fill the bss segment. */
   ldr r2, =_sbss
- 8000232:	4a0a      	ldr	r2, [pc, #40]	@ (800025c <LoopForever+0x12>)
+ 8000aaa:	4a0a      	ldr	r2, [pc, #40]	@ (8000ad4 <LoopForever+0x12>)
   ldr r4, =_ebss
- 8000234:	4c0a      	ldr	r4, [pc, #40]	@ (8000260 <LoopForever+0x16>)
+ 8000aac:	4c0a      	ldr	r4, [pc, #40]	@ (8000ad8 <LoopForever+0x16>)
   movs r3, #0
- 8000236:	2300      	movs	r3, #0
+ 8000aae:	2300      	movs	r3, #0
   b LoopFillZerobss
- 8000238:	e001      	b.n	800023e <LoopFillZerobss>
+ 8000ab0:	e001      	b.n	8000ab6 <LoopFillZerobss>
 
-0800023a <FillZerobss>:
+08000ab2 <FillZerobss>:
 
 FillZerobss:
   str  r3, [r2]
- 800023a:	6013      	str	r3, [r2, #0]
+ 8000ab2:	6013      	str	r3, [r2, #0]
   adds r2, r2, #4
- 800023c:	3204      	adds	r2, #4
+ 8000ab4:	3204      	adds	r2, #4
 
-0800023e <LoopFillZerobss>:
+08000ab6 <LoopFillZerobss>:
 
 LoopFillZerobss:
   cmp r2, r4
- 800023e:	42a2      	cmp	r2, r4
+ 8000ab6:	42a2      	cmp	r2, r4
   bcc FillZerobss
- 8000240:	d3fb      	bcc.n	800023a <FillZerobss>
+ 8000ab8:	d3fb      	bcc.n	8000ab2 <FillZerobss>
 
 /* Call static constructors */
   bl __libc_init_array
- 8000242:	f000 f811 	bl	8000268 <__libc_init_array>
+ 8000aba:	f000 f811 	bl	8000ae0 <__libc_init_array>
 /* Call the application's entry point.*/
   bl main
- 8000246:	f7ff ffdd 	bl	8000204 <main>
+ 8000abe:	f7ff ffdd 	bl	8000a7c <main>
 
-0800024a <LoopForever>:
+08000ac2 <LoopForever>:
 
 LoopForever:
   b LoopForever
- 800024a:	e7fe      	b.n	800024a <LoopForever>
+ 8000ac2:	e7fe      	b.n	8000ac2 <LoopForever>
   ldr   r0, =_estack
- 800024c:	20020000 	.word	0x20020000
+ 8000ac4:	20020000 	.word	0x20020000
   ldr r0, =_sdata
- 8000250:	20000000 	.word	0x20000000
+ 8000ac8:	20000000 	.word	0x20000000
   ldr r1, =_edata
- 8000254:	20000000 	.word	0x20000000
+ 8000acc:	20000000 	.word	0x20000000
   ldr r2, =_sidata
- 8000258:	080002d0 	.word	0x080002d0
+ 8000ad0:	08000b48 	.word	0x08000b48
   ldr r2, =_sbss
- 800025c:	20000000 	.word	0x20000000
+ 8000ad4:	20000000 	.word	0x20000000
   ldr r4, =_ebss
- 8000260:	2000001c 	.word	0x2000001c
+ 8000ad8:	2000001c 	.word	0x2000001c
 
-08000264 <ADC_IRQHandler>:
+08000adc <ADC_IRQHandler>:
  * @retval : None
 */
   .section .text.Default_Handler,"ax",%progbits
 Default_Handler:
 Infinite_Loop:
   b Infinite_Loop
- 8000264:	e7fe      	b.n	8000264 <ADC_IRQHandler>
+ 8000adc:	e7fe      	b.n	8000adc <ADC_IRQHandler>
 	...
 
-08000268 <__libc_init_array>:
- 8000268:	b570      	push	{r4, r5, r6, lr}
- 800026a:	4d0d      	ldr	r5, [pc, #52]	@ (80002a0 <__libc_init_array+0x38>)
- 800026c:	4c0d      	ldr	r4, [pc, #52]	@ (80002a4 <__libc_init_array+0x3c>)
- 800026e:	1b64      	subs	r4, r4, r5
- 8000270:	10a4      	asrs	r4, r4, #2
- 8000272:	2600      	movs	r6, #0
- 8000274:	42a6      	cmp	r6, r4
- 8000276:	d109      	bne.n	800028c <__libc_init_array+0x24>
- 8000278:	4d0b      	ldr	r5, [pc, #44]	@ (80002a8 <__libc_init_array+0x40>)
- 800027a:	4c0c      	ldr	r4, [pc, #48]	@ (80002ac <__libc_init_array+0x44>)
- 800027c:	f000 f818 	bl	80002b0 <_init>
- 8000280:	1b64      	subs	r4, r4, r5
- 8000282:	10a4      	asrs	r4, r4, #2
- 8000284:	2600      	movs	r6, #0
- 8000286:	42a6      	cmp	r6, r4
- 8000288:	d105      	bne.n	8000296 <__libc_init_array+0x2e>
- 800028a:	bd70      	pop	{r4, r5, r6, pc}
- 800028c:	f855 3b04 	ldr.w	r3, [r5], #4
- 8000290:	4798      	blx	r3
- 8000292:	3601      	adds	r6, #1
- 8000294:	e7ee      	b.n	8000274 <__libc_init_array+0xc>
- 8000296:	f855 3b04 	ldr.w	r3, [r5], #4
- 800029a:	4798      	blx	r3
- 800029c:	3601      	adds	r6, #1
- 800029e:	e7f2      	b.n	8000286 <__libc_init_array+0x1e>
- 80002a0:	080002c8 	.word	0x080002c8
- 80002a4:	080002c8 	.word	0x080002c8
- 80002a8:	080002c8 	.word	0x080002c8
- 80002ac:	080002cc 	.word	0x080002cc
+08000ae0 <__libc_init_array>:
+ 8000ae0:	b570      	push	{r4, r5, r6, lr}
+ 8000ae2:	4d0d      	ldr	r5, [pc, #52]	@ (8000b18 <__libc_init_array+0x38>)
+ 8000ae4:	4c0d      	ldr	r4, [pc, #52]	@ (8000b1c <__libc_init_array+0x3c>)
+ 8000ae6:	1b64      	subs	r4, r4, r5
+ 8000ae8:	10a4      	asrs	r4, r4, #2
+ 8000aea:	2600      	movs	r6, #0
+ 8000aec:	42a6      	cmp	r6, r4
+ 8000aee:	d109      	bne.n	8000b04 <__libc_init_array+0x24>
+ 8000af0:	4d0b      	ldr	r5, [pc, #44]	@ (8000b20 <__libc_init_array+0x40>)
+ 8000af2:	4c0c      	ldr	r4, [pc, #48]	@ (8000b24 <__libc_init_array+0x44>)
+ 8000af4:	f000 f818 	bl	8000b28 <_init>
+ 8000af8:	1b64      	subs	r4, r4, r5
+ 8000afa:	10a4      	asrs	r4, r4, #2
+ 8000afc:	2600      	movs	r6, #0
+ 8000afe:	42a6      	cmp	r6, r4
+ 8000b00:	d105      	bne.n	8000b0e <__libc_init_array+0x2e>
+ 8000b02:	bd70      	pop	{r4, r5, r6, pc}
+ 8000b04:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8000b08:	4798      	blx	r3
+ 8000b0a:	3601      	adds	r6, #1
+ 8000b0c:	e7ee      	b.n	8000aec <__libc_init_array+0xc>
+ 8000b0e:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8000b12:	4798      	blx	r3
+ 8000b14:	3601      	adds	r6, #1
+ 8000b16:	e7f2      	b.n	8000afe <__libc_init_array+0x1e>
+ 8000b18:	08000b40 	.word	0x08000b40
+ 8000b1c:	08000b40 	.word	0x08000b40
+ 8000b20:	08000b40 	.word	0x08000b40
+ 8000b24:	08000b44 	.word	0x08000b44
 
-080002b0 <_init>:
- 80002b0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 80002b2:	bf00      	nop
- 80002b4:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 80002b6:	bc08      	pop	{r3}
- 80002b8:	469e      	mov	lr, r3
- 80002ba:	4770      	bx	lr
+08000b28 <_init>:
+ 8000b28:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8000b2a:	bf00      	nop
+ 8000b2c:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8000b2e:	bc08      	pop	{r3}
+ 8000b30:	469e      	mov	lr, r3
+ 8000b32:	4770      	bx	lr
 
-080002bc <_fini>:
- 80002bc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 80002be:	bf00      	nop
- 80002c0:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 80002c2:	bc08      	pop	{r3}
- 80002c4:	469e      	mov	lr, r3
- 80002c6:	4770      	bx	lr
+08000b34 <_fini>:
+ 8000b34:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8000b36:	bf00      	nop
+ 8000b38:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8000b3a:	bc08      	pop	{r3}
+ 8000b3c:	469e      	mov	lr, r3
+ 8000b3e:	4770      	bx	lr
