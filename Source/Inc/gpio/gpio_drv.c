@@ -7,6 +7,17 @@
 #include "std_types.h"
 #include "memmap_gpio.h"
 
+#define AHB1_GPIOA ((Registers_GPIO *)(GPIOA_BASE))
+#define AHB1_GPIOB ((Registers_GPIO *)(GPIOB_BASE))
+#define AHB1_GPIOC ((Registers_GPIO *)(GPIOC_BASE))
+#define AHB1_GPIOD ((Registers_GPIO *)(GPIOD_BASE))
+#define AHB1_GPIOE ((Registers_GPIO *)(GPIOE_BASE))
+#define AHB1_GPIOF ((Registers_GPIO *)(GPIOF_BASE))
+#define AHB1_GPIOG ((Registers_GPIO *)(GPIOG_BASE))
+#define AHB1_GPIOH ((Registers_GPIO *)(GPIOH_BASE))
+#define AHB1_GPIOI ((Registers_GPIO *)(GPIOI_BASE))
+
+
 void vDoConfigurePin(gpio_ports Port, gpio_pins Pin, eModesForGPIOx_MODER u2Mode)
 {
     // Calculate the position of the pin in the MODER register

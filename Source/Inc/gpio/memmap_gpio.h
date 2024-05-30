@@ -24,7 +24,7 @@
 #define GPIOI_OFFSET (0x2000UL)
 
 /* Configure the base for every port */
-#define GPIOA_BASE (AHB1_BASE + GPIOA_OFFSET)
+
 #define GPIOB_BASE (AHB1_BASE + GPIOB_OFFSET)
 #define GPIOC_BASE (AHB1_BASE + GPIOC_OFFSET)
 #define GPIOD_BASE (AHB1_BASE + GPIOD_OFFSET)
@@ -35,17 +35,12 @@
 #define GPIOI_BASE (AHB1_BASE + GPIOI_OFFSET)
 
 
-#define AHB1_GPIOA ((Registers_GPIO *)(GPIOA_BASE))
-#define AHB1_GPIOB ((Registers_GPIO *)(GPIOB_BASE))
-#define AHB1_GPIOC ((Registers_GPIO *)(GPIOC_BASE))
-#define AHB1_GPIOD ((Registers_GPIO *)(GPIOD_BASE))
-#define AHB1_GPIOE ((Registers_GPIO *)(GPIOE_BASE))
-#define AHB1_GPIOF ((Registers_GPIO *)(GPIOF_BASE))
-#define AHB1_GPIOG ((Registers_GPIO *)(GPIOG_BASE))
-#define AHB1_GPIOH ((Registers_GPIO *)(GPIOH_BASE))
-#define AHB1_GPIOI ((Registers_GPIO *)(GPIOI_BASE))
-
-
+#define GPIOA_MODER   (*(volatile unsigned int *)GPIOA_BASE + 0x00UL)
+#define GPIOA_BASE (AHB1_BASE + GPIOA_OFFSET)
+/* First setup the BUS AHB1_BASE */
+#define AHB1_BASE (0x40020000UL)
+/* Configure the offset for every PORT */
+#define GPIOA_OFFSET (0x0000UL)
 
 typedef union
 {

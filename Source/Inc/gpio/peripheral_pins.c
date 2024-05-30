@@ -42,13 +42,13 @@
 void vDoSetStateUserLed(bool pin_state)
 {
 	/* To be safe it's only boolean */
-	pin_state = pin_state != 0;
+	//pin_state = pin_state != 0;
 
-	vDoConfigurePin(PORTA,5, eGeneralPurposeOutput);
-	vDoSelectPinSpeed(PORTA,5, eOSpeedHighSpeed);
-	vDoCfgOutTypePins(PORTA,5, eOutputPushPull);
-	vDoCfgInputOutputTypePins(PORTA,5,eNoPullUpOrPullDown);
-	vDoSetStateOutputPin(PORTA,5,pin_state);
+	vDoConfigurePin(PORTA,PA7, eGeneralPurposeOutput);
+	vDoSelectPinSpeed(PORTA,PA7, eOSpeedHighSpeed);
+	vDoCfgOutTypePins(PORTA,PA7, eOutputPushPull);
+	vDoCfgInputOutputTypePins(PORTA,PA7,eNoPullUpOrPullDown);
+	vDoSetStateOutputPin(PORTA,PA7,pin_state);
 }
 
 
