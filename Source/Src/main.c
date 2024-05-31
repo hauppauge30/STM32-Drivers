@@ -32,11 +32,14 @@ int main()
 {
 	RCC_AHB1EN_R |=GPIOAEN;
 
-
+	vDoSetStateUserLed(1);
 
 	while(1)
 	{
-		vDoSetStateUserLed(1);
+
+	//	for (volatile int i = 0; i < 100; i++); // Delay
+		vDoSetStateUserLed(0);
+	//	for (volatile int i = 0; i < 100; i++); // Delay
 	}
 
 

@@ -47,7 +47,15 @@ void vDoSetStateUserLed(bool pin_state)
 	vDoSelectPinSpeed(PORTA,PA5, eOSpeedLowSpeed);
 	vDoCfgOutTypePins(PORTA,PA5, eOutputPushPull);
 	vDoCfgInputOutputTypePins(PORTA,PA5,eNoPullUpOrPullDown);
-	vDoSetPin(PORTA,PA5,pin_state);
+
+	if(pin_state != 0)
+	{
+		vDoSetPin(PORTA,PA5);
+	}
+	else
+	{
+		vDoResetPin(PORTA,PA5);
+	}
 }
 
 
