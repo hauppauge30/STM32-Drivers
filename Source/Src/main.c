@@ -1,5 +1,7 @@
 
 #include "../Inc/gpio/peripheral_pins.h"
+#include "../Inc/gpio/memmap_gpio.h"
+#include "../Inc/gpio/gpio_drv.h"
 #define AHB1_BASE (0x40020000UL)
 #define GPIOA_OFFSET (0x0000UL)
 #define GPIOA_BASE (AHB1_BASE + GPIOA_OFFSET)
@@ -29,11 +31,12 @@
 int main()
 {
 	RCC_AHB1EN_R |=GPIOAEN;
-	GPIOA_MODE_R |= (1U<<10);
-	GPIOA_MODE_R &=~(1U<<11);
+
+
+
 	while(1)
 	{
-		GPIOA_OD_R |=LED_PIN;
+		vDoSetStateUserLed(1);
 	}
 
 

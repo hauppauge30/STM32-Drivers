@@ -17,7 +17,7 @@
 #define AHB1_GPIOH ((Registers_GPIO *)(GPIOH_BASE))
 #define AHB1_GPIOI ((Registers_GPIO *)(GPIOI_BASE))
 
-
+unsigned int debug;
 void vDoConfigurePin(gpio_ports Port, gpio_pins Pin, eModesForGPIOx_MODER u2Mode)
 {
     // Calculate the position of the pin in the MODER register
@@ -27,9 +27,13 @@ void vDoConfigurePin(gpio_ports Port, gpio_pins Pin, eModesForGPIOx_MODER u2Mode
     {
         case PORTA:
             // Clear the existing mode for the specified pin
+
+        	debug = AHB1_GPIOA->GPIOx_MODER.GPIOx_MODER_Reg;
             AHB1_GPIOA->GPIOx_MODER.GPIOx_MODER_Reg &= ~(0x3 << position);
             // Set the new mode for the specified pin
             AHB1_GPIOA->GPIOx_MODER.GPIOx_MODER_Reg |= (u2Mode) << position;
+            debug = AHB1_GPIOA->GPIOx_MODER.GPIOx_MODER_Reg;
+
             break; // Exit the switch after each case
         case PORTB:
             // Clear the existing mode for the specified pin

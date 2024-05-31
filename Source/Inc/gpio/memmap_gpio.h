@@ -45,24 +45,24 @@
 typedef union
 {
 	struct {
-		uint8 MODER0:2;
-		uint8 MODER1:2;
-		uint8 MODER2:2;
-		uint8 MODER3:2;
-		uint8 MODER4:2;
-		uint8 MODER5:2;
-		uint8 MODER6:2;
-		uint8 MODER7:2;
-		uint8 MODER8:2;
-		uint8 MODER9:2;
-		uint8 MODER10:2;
-		uint8 MODER11:2;
-		uint8 MODER12:2;
-		uint8 MODER13:2;
-		uint8 MODER14:2;
-		uint8 MODER15:2;
+		volatile uint8 MODER0:2;
+		volatile uint8 MODER1:2;
+		volatile uint8 MODER2:2;
+		volatile uint8 MODER3:2;
+		volatile uint8 MODER4:2;
+		volatile uint8 MODER5:2;
+		volatile uint8 MODER6:2;
+		volatile uint8 MODER7:2;
+		volatile uint8 MODER8:2;
+		volatile uint8 MODER9:2;
+		volatile uint8 MODER10:2;
+		volatile uint8 MODER11:2;
+		volatile uint8 MODER12:2;
+		volatile uint8 MODER13:2;
+		volatile uint8 MODER14:2;
+		volatile uint8 MODER15:2;
 	}GPIOx_MODER_Bit_Set;
-	uint32 GPIOx_MODER_Reg;
+	volatile uint32 GPIOx_MODER_Reg;
 }GPIOx_MODER_reg;
 
 /* Bits 2y:2y+1 MODERy[1:0]: Port x configuration bits (y = 0..15)
@@ -102,7 +102,7 @@ typedef union
 			bool OT15:1;
 			const uint16 reserved;
 	}GPIOx_OTYPER_Bit_Set;
-	uint32 GPIOx_OTYPER_Reg;
+	volatile uint32 GPIOx_OTYPER_Reg;
 }GPIOx_OTYPER_reg;
 
 /*
@@ -138,7 +138,7 @@ typedef union
 		uint8 OSPEEDR14:2;
 		uint8 OSPEEDR15:2;
 	}GPIOx_OSPEEDR_Bit_Set;
-	uint32 GPIOx_OSPEEDR_Reg;
+	volatile uint32 GPIOx_OSPEEDR_Reg;
 }GPIOx_OSPEEDR_reg;
 
 
@@ -179,7 +179,7 @@ typedef struct
 		uint8  PUPDR14:2;
 		uint8  PUPDR15:2;
 	}GPIOx_PUPDR_Bit_Set;
-	uint32 GPIOx_PUPDR_Reg;
+	volatile uint32 GPIOx_PUPDR_Reg;
 }GPIOx_PUPDR_reg;
 
 /*
@@ -220,7 +220,7 @@ typedef union
 		bool IDR15:1;
 		uint16 reserved;
 	}GPIOx_IDR_Bit_Set;
-	uint32 u32GPIOx_IDR_Reg;
+	volatile uint32 u32GPIOx_IDR_Reg;
 }GPIOx_IDR_reg;
 
 
@@ -246,7 +246,7 @@ typedef union
 		bool  ODR15:1;
 		uint16 reserved;
 	}GPIOx_ODR_Bit_Set;
-	uint32 u32GPIOx_ODR_Reg;
+	volatile uint32 u32GPIOx_ODR_Reg;
 }GPIOx_ODR_reg;
 
 typedef union
@@ -312,7 +312,7 @@ typedef union
 		uint16 reserved:15;
 	}GPIOx_LCKR_Bit_Set;
 
-	uint32 u32GPIOx_LCKR_Reg;
+	volatile uint32 u32GPIOx_LCKR_Reg;
 }GPIOx_LCKR_reg;
 
 
@@ -370,7 +370,7 @@ typedef union
 		}AFRL7;
 	}GPIOx_AFRL_Bit_Set;
 
-	uint32 u32GPIOx_AFRL_Reg;
+	volatile uint32 u32GPIOx_AFRL_Reg;
 }GPIOx_AFRL_reg;
 
 typedef union
@@ -385,16 +385,17 @@ typedef union
 		uint8 AFRH14:4;
 		uint8 AFRH15:4;
 	}GPIOx_AFRH_Bit_Set;
-	uint32 u32GPIOx_AFRH_Reg;
+	volatile uint32 u32GPIOx_AFRH_Reg;
 }GPIOx_AFRH_reg;
 
+#define _IO vol
 
 typedef struct
 {
 	/* 0x40020000 */
-	volatile GPIOx_MODER_reg   GPIOx_MODER;   /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x00*/
+	volatile GPIOx_MODER_reg  GPIOx_MODER;   /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x00*/
 	/* 0x40020004 */
-	volatile GPIOx_OTYPER_reg  GPIOx_OTYPER;  /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x04*/
+	volatile  GPIOx_OTYPER_reg  GPIOx_OTYPER;  /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x04*/
 	/* 0x40020008 */
 	volatile GPIOx_OSPEEDR_reg GPIOx_OSPEEDR; /* START ADRESS 0x40020000 + Datasheet offset for this register: 0x08*/
 	/* 0x4002000C */
@@ -416,6 +417,7 @@ typedef struct
 
 typedef enum
 {
+	PA0,
 	PA1,
 	PA2,
 	PA3,
